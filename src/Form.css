@@ -7,6 +7,12 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
+.Head{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 
 form {
   display: flex;
@@ -29,12 +35,14 @@ textarea {
 }
 
 button {
+    position: relative;
   background-color: #4caf50;
   color: white;
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  left: 43%;
 }
 
 button:hover {
