@@ -8,17 +8,17 @@ function Form(){
             <div class="">
                 <form>
                     <div className=''>
-                        <label>Product</label>
+                        <label>Product*</label>
                         <input type="text" name="Product" id ="Product" placeholder="Brand_Name,Product_Name" required />
                         
                     </div>
                     <div className='container'>
                     <div>
-                        <label>Keywords</label>
+                        <label>Keywords*</label>
                         <textarea rows="9" type="text" name="Keywords" id="Keywords" placeholder="Values must be seperated by comma(,)" required></textarea>
                     </div>
                     <div>
-                        <label>Features</label>
+                        <label>Features*</label>
                         <textarea rows="9" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required></textarea>   
                     </div>
                     <div>
