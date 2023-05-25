@@ -11,17 +11,28 @@ import Select4 from './components/select4.jsx';
 function Form(){
     
     const [flag,setflag] = useState(true);
-    const [show1, setShow1] = useState(false);
-    const [show, setShow] = useState(false);
+    
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
     const [selectedGender, setSelectedGender] = useState('Male');
     const [selectedAge, setSelectedAge] = useState('Teen');
     const [selectedTone, setSelectedTone] = useState('Friendly');
     const [product, setProduct] = useState('');
     const [features, setFeatures] = useState('');
-    const [manual, setManual] = useState('');
+
     let [mData, setmData] = useState({});
-    const test="hello,this,is,sample,keywords";
+   
+    const [keywords, setKeywords] = useState('');
+    const test = 'example1, example2, example3'; 
+  
+    const handleAutomaticClick = (event) => {
+        event.preventDefault(); 
+      setKeywords(test);
+    };
+  
+    const handleManualChange = (event) => {
+        
+      setKeywords(event.target.value);
+    };
     const catalog = {
         product: product,
         marketplace: selectedMarketplace,
@@ -29,11 +40,9 @@ function Form(){
         age:selectedAge,
         tone:selectedTone,
         features:features,
-        keywords:manual
+        keywords:keywords
     };
-    const handleManualChange = (event) => {
-        setManual(event.target.value);
-      };
+    
     const handleProductChange = (event) => {
         setProduct(event.target.value);
       };
@@ -64,7 +73,7 @@ function Form(){
             age:selectedAge,
             tone:selectedTone,
             features:features,
-            keywords:manual
+            keywords:keywords
         };
 
         console.log(catalog);
@@ -81,7 +90,7 @@ function Form(){
               throw new Error('Network response was not ok');
             }
       
-            const data = await response.json(); // Parse the JSON response
+            const data = await response.json();
             mData = data;
           } catch (error) {
             console.log(error);
@@ -157,18 +166,21 @@ function Form(){
                     <div>
                         <label>Keywords</label>
                         <div>
-                            { show1 ? <div> 
-                                        <p className='generate'>These are the generated Keywords --</p>
-                                        <textarea  readOnly value={test}></textarea>
-                                    </div>  : null }
-                            {show ? <div>
-                                        <p className='manual'>Enter the keywords manually --</p>
-                                        <textarea rows="4" type="text" name="Keywords" id="Keywords" placeholder="Values must be separated by comma(,)" required onChange={handleManualChange}></textarea> 
-                                    </div>  : null } 
-                            { show1 ? null: <button  onClick={() => setShow1(!show1)} className='button-2' value="automatic" id="automatic" >Generate Keywords Automatically</button>}
-                            { show ? null : <button onClick={() => setShow(!show)} className='button-2' value="manual" id="manual" >Enter Keywords Manually</button>  }  
-                                                    
-                        </div>
+                         <textarea
+                         rows="6"
+                         type="text"
+                         name="Keywords"
+                         id="Keywords"
+                         placeholder="Values must be separated by comma(,)"
+                         value={keywords}
+                         onChange={handleManualChange}
+                         required
+                       />
+
+                    <button  onClick={handleAutomaticClick} className='button-2' >
+                    Generate Keywords Automatically
+                    </button>
+                    </div>
                         
                     </div>
                     </div>
@@ -181,13 +193,13 @@ function Form(){
         : 
         <div class="response">
             <div class="content">
-                <label class="r-title">Product Name: {catalog.product}</label><br />
+                <label class="r-title">Product Name: {catalog.product}</label><br /><br />
                 <label class="r-label">Title: </label><br />
-                <label class="r-value">{mData.title}</label><br />
+                <label class="r-value">{mData.title}</label><br /><br />
                 <label class="r-label">Product Description:</label><br />
-                <label class="r-value">{mData.productdescription}</label><br />
+                <label class="r-value">{mData.productdescription}</label><br /><br />
                 <label class="r-label">Bullet Points:</label><br />
-                <label class="r-value">{mData.bulletpoints}</label><br />
+                <label class="r-value">{mData.bulletpoints}</label><br /><br />
                 <label class="r-label">Search Terms:</label><br />
                 <label class="r-value">{mData.searchterms}</label><br />
             </div>

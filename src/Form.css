@@ -88,8 +88,8 @@ textarea {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 300px;
-  margin-top: 25px;
+  margin-left: 70px;
+  margin-top: 10px;
 }
 
 .button-2:hover {
