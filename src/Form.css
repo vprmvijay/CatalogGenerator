@@ -1,122 +1,62 @@
 .Form {
   margin: 20px;
-  background-color: #f2f2f2;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.Head{
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-
-form {
-  display: flex;
-  flex-direction: column;
-  
-}
-
-label {
-  margin-bottom: 5px;
-}
-
-input[type="text"]{
-    width: 100%;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-textarea {
-  width: 100%;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-.button-1 {
-    position: relative;
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  left: 43%;
-  margin-bottom: 20px;
-}
-
-.button-1:hover {
-  background-color: #1a9435c9;
-}
-
-.Form {
+  background-color: #e0e0e0;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.Head {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
+
 .container-1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .container > div {
   flex-basis: 23%;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
-
 
 .container-1 > div {
-  flex-basis: 40%;
-  margin-bottom: 10px;
-
-}
-.button-2 {
-    position: relative;
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 70px;
-  margin-top: 10px;
+  flex-basis: 45%;
+  margin-bottom: 20px;
 }
 
-.button-2:hover {
-  background-color: #1a9435c9;
-}
-.label-1{
- padding-left: 15px;
-  padding-right: 15px;
-}
 .response {
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
   padding: 20px;
   margin-top: 20px;
-  
 }
 
 .r-title {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.r-label {
-  font-weight: bold;
-}
-
-.r-value {
   margin-bottom: 10px;
 }
 
@@ -124,7 +64,7 @@ textarea {
   margin-top: 20px;
   margin-left: 20%;
   padding: 10px 20px;
-  background-color: #45a049;
+  background-color: #4caf50;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -132,5 +72,86 @@ textarea {
 }
 
 .r-button:hover {
-  background-color: #1a9435c9;
+  background-color: #45a049;
+}
+
+.button-1,
+.button-2 {
+  background-color: #4caf50;
+  font-size: medium;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.button-1:hover,
+.button-2:hover {
+  background-color: #45a049;
+}
+
+.button-1 {
+  display: block;
+  margin: 0 auto;
+}
+
+.button-2 {
+  margin-left: 20%;
+  margin-top: 0;
+}
+
+.button-2:focus {
+  outline: none;
+}
+
+.label-1 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+textarea {
+  resize: vertical;
+}
+.label-1,
+.r-label {
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+.response {
+  font-size: 14px;
+}
+
+.content {
+  margin-bottom: 20px;
+}
+
+
+.Form {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.response {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  border-left: 4px solid #4caf50;
 }

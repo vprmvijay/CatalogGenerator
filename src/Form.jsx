@@ -126,7 +126,7 @@ function Form(){
         <div>
         { flag ?
         <div className='Form'>
-            <label className='Head'>Amazon Catalog Generator</label>
+            <label className='Head'>Amazon Catalog Generator</label><br />
             <label className='title'>Generate content for single listing</label>
             <div className="">
                 <form>
@@ -138,21 +138,21 @@ function Form(){
                     <div>
                         <div className='container'>
                             <div>
-                                <label className='label-1'>Select Marketplace</label>
+                                <label className='label-1'>Select Marketplace*</label>
                                 <Select onChange={handleMarketplaceChange} />
                             </div>
                             <div>
-                                <label className='label-1'>Select Gender</label>
+                                <label className='label-1'>Select Gender*</label>
                                 <Select2 onChange={handleGenderChange}/>
 
                             </div>
                             <div>
-                                <label className='label-1'>AgeGroup</label>
+                                <label className='label-1'>AgeGroup*</label>
                                 <Select3 onChange={handleAgeChange}/>
 
                             </div>
                             <div>
-                                <label className='label-1'>Select Tone</label>
+                                <label className='label-1'>Select Tone*</label>
                                 <Select4 onChange={handleToneChange}/>
 
                             </div>
@@ -164,7 +164,7 @@ function Form(){
                         <textarea rows="9" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required onChange={handleFeatureChange}></textarea>   
                     </div>
                     <div>
-                        <label>Keywords</label>
+                        <label>Keywords*</label>
                         <div>
                          <textarea
                          rows="6"
