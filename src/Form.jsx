@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import React,{ useState } from 'react';
+import keywordExtractor from 'keyword-extractor';
 
 import './Form.css'
 import Select from './components/select.jsx';
@@ -17,17 +17,31 @@ function Form(){
     const [selectedAge, setSelectedAge] = useState('Teen');
     const [selectedTone, setSelectedTone] = useState('Friendly');
     const [product, setProduct] = useState('');
+    const [brand, setBrand] = useState('');
+    const [quantity, setQuantity] = useState('');
     const [features, setFeatures] = useState('');
 
     let [mData, setmData] = useState({});
    
-    const [keywords, setKeywords] = useState('');
-    const test = 'example1, example2, example3'; 
+      const [keywords, setKeywords] = useState([]);
+        const handleAutomaticClick = (event) => {
+          event.preventDefault();
+          const concatenatedText = product + ' ' + features;
+          const extractedKeywords = keywordExtractor.extract(concatenatedText, {
+            language: 'english',
+            remove_digits: true,
+            return_changed_case: true,
+            remove_duplicates: true,
+          });
+          setKeywords(extractedKeywords);
+        };
+    
+    // const test = 'example1, example2, example3'; 
   
-    const handleAutomaticClick = (event) => {
-        event.preventDefault(); 
-      setKeywords(test);
-    };
+    // const handleAutomaticClick = (event) => {
+    //     event.preventDefault(); 
+    //   setKeywords(test);
+    // };
   
     const handleManualChange = (event) => {
         
@@ -35,9 +49,11 @@ function Form(){
     };
     const catalog = {
         product: product,
+        brand:brand,
         marketplace: selectedMarketplace,
         gender:selectedGender,
         age:selectedAge,
+        quantity:quantity,
         tone:selectedTone,
         features:features,
         keywords:keywords
@@ -45,6 +61,12 @@ function Form(){
     
     const handleProductChange = (event) => {
         setProduct(event.target.value);
+      };
+    const handleQuantityChange = (event) => {
+        setQuantity(event.target.value);
+      };
+    const handleBrandChange = (event) => {
+        setBrand(event.target.value);
       };
     const handleFeatureChange = (event) => {
         setFeatures(event.target.value);
@@ -67,13 +89,15 @@ function Form(){
 
    
         const catalog = {
-            product: product,
-            marketplace: selectedMarketplace,
-            gender:selectedGender,
-            age:selectedAge,
-            tone:selectedTone,
-            features:features,
-            keywords:keywords
+          product: product,
+          brand:brand,
+          marketplace: selectedMarketplace,
+          gender:selectedGender,
+          age:selectedAge,
+          quantity:quantity,
+          tone:selectedTone,
+          features:features,
+          keywords:keywords
         };
 
         console.log(catalog);
@@ -95,10 +119,10 @@ function Form(){
           } catch (error) {
             console.log(error);
           }
-        //   setmData({
-        //     ...mData,
-        //     [event.target.name]: event.target.value,
-        //   });
+          setmData({
+            ...mData,
+            [event.target.name]: event.target.value,
+          });
         }
         const regenerate = async () => {
             try {
@@ -131,8 +155,18 @@ function Form(){
             <div className="">
                 <form>
                     <div className=''>
-                        <label>Product*</label>
-                        <input type="text" name="Product" id ="Product" placeholder="Brand_Name,Product_Name" required onChange={handleProductChange}/>
+                        <label>Product Name*</label>
+                        <input type="text" name="Product" id ="Product" placeholder="Product_Name" required onChange={handleProductChange}/>
+                        
+                    </div>
+                    <div className='hell'>
+                        <label>Brand Name*</label>
+                        <input type="text" name="brand" id ="brand" placeholder="Brand_Name" required onChange={handleBrandChange}/>
+                        
+                    </div>
+                    <div className=''>
+                        <label>Quantity*</label>
+                        <input type="text" name="quantity" id ="quantity" placeholder="Quantity" required onChange={handleQuantityChange}/>
                         
                     </div>
                     <div>
