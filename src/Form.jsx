@@ -14,7 +14,7 @@ function Form(){
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
     const [selectedGender, setSelectedGender] = useState('Male');
-    const [selectedAge, setSelectedAge] = useState('Teen');
+    const [selectedAge, setSelectedAge] = useState('Adult');
     const [selectedTone, setSelectedTone] = useState('Friendly');
     const [product, setProduct] = useState('');
     const [brand, setBrand] = useState('');

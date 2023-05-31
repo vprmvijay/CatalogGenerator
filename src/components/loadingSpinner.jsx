@@ -3,8 +3,11 @@ import './LoadingSpinner.css'; // Import the CSS file for styling the loading sp
 
 const LoadingSpinner = () => {
   return (
-    <div className="loading-spinner-container">
-      <div className="loading-spinner"></div>
+    <div className="loading-spinner-overlay">
+      <div className="loading-spinner-container">
+        <div className="loading-spinner"></div>
+        <p>Please wait. It may take a while.</p>
+      </div>
     </div>
   );
 };
