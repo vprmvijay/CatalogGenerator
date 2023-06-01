@@ -2,7 +2,7 @@ import React from "react";
 import './select.css'
 
 const Select = ({ onChange }) => {
-	const options = ['Amazon', 'Filpkart', 'Ajio'];
+	const options = ['Amazon'];
   
 	const onOptionChangeHandler = (event) => {
 	  const selectedValue = event.target.value;

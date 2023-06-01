@@ -1,7 +1,7 @@
 import React from "react";
 import './select.css'
 const App = ({ onChange }) => {
-	const options = ['Friendly', 'Simple','Professional'];
+	const options = ['Informative', 'Motivational','Formal'];
 	const onOptionChangeHandler = (event) => {
 		const selectedValue = event.target.value;
 		onChange(selectedValue);

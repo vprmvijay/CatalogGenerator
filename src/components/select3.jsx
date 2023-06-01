@@ -1,28 +1,45 @@
-import React from "react";
-import './select.css'
-const App = ({ onChange}) => {
-	const options = ['Teen', 'Young Adult','Adult','Senior'];
-	const onOptionChangeHandler = (event) => {
-		const selectedValue = event.target.value;
-	    onChange(selectedValue);
-		
-    };
-	return (
-		<>
-			
-				
-				<select onChange={onOptionChangeHandler}>
+import React, { useState, useEffect } from "react";
+import "./select.css";
 
-					
-					{options.map((option, index) => {
-						return <option key={index} >
-							{option}
-						</option>
-					})}
-				</select>
-			
-		</>
-	);
+const Select3 = ({ onChange }) => {
+  const options = ["Kids", "Teen", "Adult", "Senior"];
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    onChange(selectedOptions);
+  }, [selectedOptions]);
+
+  const onOptionChangeHandler = (event) => {
+    const selectedValue = event.target.value;
+    const isChecked = event.target.checked;
+
+    if (isChecked) {
+      setSelectedOptions((prevSelectedOptions) => [
+        ...prevSelectedOptions,
+        selectedValue,
+      ]);
+    } else {
+      setSelectedOptions((prevSelectedOptions) =>
+        prevSelectedOptions.filter((option) => option !== selectedValue)
+      );
+    }
+  };
+
+  return (
+    <>
+      {options.map((option, index) => (
+        <div key={index}>
+          <input
+            type="checkbox"
+            value={option}
+            checked={selectedOptions.includes(option)}
+            onChange={onOptionChangeHandler}
+          />
+          <label>{option}</label>
+        </div>
+      ))}
+    </>
+  );
 };
 
-export default App;
+export default Select3;

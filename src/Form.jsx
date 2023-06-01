@@ -1,6 +1,6 @@
-import { useState } from 'react';
-
-
+import React,{ useState } from 'react';
+import keywordExtractor from 'keyword-extractor';
+import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
 import Select from './components/select.jsx';
 import Select2 from './components/select2.jsx';
@@ -14,20 +14,34 @@ function Form(){
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
     const [selectedGender, setSelectedGender] = useState('Male');
-    const [selectedAge, setSelectedAge] = useState('Teen');
+    const [selectedAge, setSelectedAge] = useState();
     const [selectedTone, setSelectedTone] = useState('Friendly');
     const [product, setProduct] = useState('');
+    const [brand, setBrand] = useState('');
+    const [quantity, setQuantity] = useState('');
     const [features, setFeatures] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    let [mData, setmData] = useState({});
+    const [mData, setmData] = useState({});
+    const [keywords, setKeywords] = useState([]);
+        const handleAutomaticClick = (event) => {
+          event.preventDefault();
+          const concatenatedText = product + ' ' + features;
+          const extractedKeywords = keywordExtractor.extract(concatenatedText, {
+            language: 'english',
+            remove_digits: true,
+            return_changed_case: true,
+            remove_duplicates: true,
+          });
+          setKeywords(extractedKeywords);
+        };
+    
    
-    const [keywords, setKeywords] = useState('');
-    const test = 'example1, example2, example3'; 
   
-    const handleAutomaticClick = (event) => {
-        event.preventDefault(); 
-      setKeywords(test);
-    };
+    // const handleAutomaticClick = (event) => {
+    //     event.preventDefault(); 
+    //   setKeywords(test);
+    // };
   
     const handleManualChange = (event) => {
         
@@ -35,9 +49,11 @@ function Form(){
     };
     const catalog = {
         product: product,
+        brand:brand,
         marketplace: selectedMarketplace,
         gender:selectedGender,
         age:selectedAge,
+        quantity:quantity,
         tone:selectedTone,
         features:features,
         keywords:keywords
@@ -46,39 +62,116 @@ function Form(){
     const handleProductChange = (event) => {
         setProduct(event.target.value);
       };
+    const handleQuantityChange = (event) => {
+        setQuantity(event.target.value);
+      };
+    const handleBrandChange = (event) => {
+        setBrand(event.target.value);
+      };
     const handleFeatureChange = (event) => {
         setFeatures(event.target.value);
       };
     const handleToneChange = (value) => {
         setSelectedTone(value);
       };
-    const handleAgeChange = (value) => {
-        setSelectedAge(value);
+      const handleAgeChange = (value) => {
+        if (value.length === 0) {
+          setSelectedAge([""]); // Add an empty string to indicate no selection
+        } else {
+          setSelectedAge(value);
+        }
       };
+      
+      
     const handleGenderChange = (value) => {
         setSelectedGender(value);
       };
     const handleMarketplaceChange = (value) => {
         setSelectedMarketplace(value);
       };
+   
+
+  
+      const formatData = (data) => {
+        const dataString = JSON.stringify(data); // Convert data object to string
+        const formattedData = dataString.replace(
+          /(Title:)(.*?)(Product Description:)(.*?)(Bullet Points:)([\s\S]*)/s,
+          (match, title, titleValue, desc, descValue, bullet, bulletValue) => {
+            const productDescription = addLineBreaks(descValue.trim(), 130);
+            const bulletPoints = addLineBreaksBullet(bulletValue.trim(), 130);
+            return `${title}${titleValue}\n\n${desc}\n\n${productDescription}\n\n${bullet}\n${bulletPoints}`;
+          }
+        );
+      
+        return formattedData;
+      };
+      
+      
+      const addLineBreaks = (text, maxWidth) => {
+        const words = text.split(' ');
+        let currentLine = '';
+        let lines = [];
+      
+        words.forEach((word) => {
+          if (currentLine.length + word.length <= maxWidth) {
+            currentLine += (currentLine === '' ? '' : ' ') + word;
+          } else {
+            lines.push(currentLine);
+            currentLine = word;
+          }
+        });
+      
+        lines.push(currentLine);
+        return lines.join('\n');
+      };
+      
+      const addLineBreaksBullet = (text, maxWidth) => {
+        const lines = [];
+        const bullets = text.split(/(?=\d\.)/);
+      
+        bullets.forEach((bullet) => {
+          const words = bullet.trim().split(' ');
+          let currentLine = '';
+      
+          words.forEach((word) => {
+            if (currentLine.length + word.length <= maxWidth) {
+              currentLine += (currentLine === '' ? '' : ' ') + word;
+            } else {
+              lines.push(currentLine);
+              currentLine = word;
+            }
+          });
+      
+          lines.push(currentLine);
+        });
+      
+        return lines.join('\n');
+      };
+      
+      
+      
+      // Usage
+      const formattedOutput = formatData(mData);
 
     const handleSubmit = async (event) => {
         
 
    
         const catalog = {
-            product: product,
-            marketplace: selectedMarketplace,
-            gender:selectedGender,
-            age:selectedAge,
-            tone:selectedTone,
-            features:features,
-            keywords:keywords
+          product: product,
+          brand:brand,
+          marketplace: selectedMarketplace,
+          gender:selectedGender,
+          age:selectedAge,
+          quantity:quantity,
+          tone:selectedTone,
+          features:features,
+          keywords:keywords
         };
-
+        setLoading(true); 
         console.log(catalog);
         try {
-            const response = await fetch(``, {
+            const response = await fetch(`https://cataloggeneratorv1.azurewebsites.net/api/CatalogGeneratorV1?product=${catalog.product}&brand=${catalog.brand}&marketplace=${catalog.marketplace}&gender=${catalog.gender}&age=${catalog.age}&quantity=${catalog.quantity}&tone=${catalog.tone}&features=${catalog.features}&keywords=${catalog.keywords}`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -91,18 +184,19 @@ function Form(){
             }
       
             const data = await response.json();
-            mData = data;
+            setmData(data);
+            setflag(false);
+      console.log(data);
+
           } catch (error) {
             console.log(error);
           }
-        //   setmData({
-        //     ...mData,
-        //     [event.target.name]: event.target.value,
-        //   });
+         setLoading(false);
         }
         const regenerate = async () => {
+          setLoading(true);
             try {
-              const response = await fetch(`API_ENDPOINT_URL`, {
+              const response = await fetch(`https://cataloggeneratorv1.azurewebsites.net/api/CatalogGeneratorV1?product=${catalog.product}&brand=${catalog.brand}&marketplace=${catalog.marketplace}&gender=${catalog.gender}&age=${catalog.age}&quantity=${catalog.quantity}&tone=${catalog.tone}&features=${catalog.features}&keywords=${catalog.keywords}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -115,13 +209,14 @@ function Form(){
               }
         
               const data = await response.json();
-             mData=data;
+              setmData(data);
+              
             } catch (error) {
               console.log(error);
             }
-    };
+            setLoading(false);
     
-    
+          }
     return(
         <div>
         { flag ?
@@ -131,8 +226,18 @@ function Form(){
             <div className="">
                 <form>
                     <div className=''>
-                        <label>Product*</label>
-                        <input type="text" name="Product" id ="Product" placeholder="Brand_Name,Product_Name" required onChange={handleProductChange}/>
+                        <label>Product Name*</label>
+                        <input type="text" name="Product" id ="Product" placeholder="Product_Name" required onChange={handleProductChange}/>
+                        
+                    </div>
+                    <div className='hell'>
+                        <label>Brand Name*</label>
+                        <input type="text" name="brand" id ="brand" placeholder="Brand_Name" required onChange={handleBrandChange}/>
+                        
+                    </div>
+                    <div className=''>
+                        <label>Quantity*</label>
+                        <input type="text" name="quantity" id ="quantity" placeholder="Quantity" required onChange={handleQuantityChange}/>
                         
                     </div>
                     <div>
@@ -185,29 +290,28 @@ function Form(){
                     </div>
                     </div>
                     <div className='but'>
-                        <button onClick={() => { setflag(!flag); handleSubmit();}} className='button-1' value="submit" id="submit" >Generate Catalog</button>
+                        <button onClick={() => { setflag(!flag); handleSubmit();}} className='button-1'  >Generate Catalog</button>
                     </div>  
                 </form>
             </div>
         </div>
         : 
-        <div class="response">
-            <div class="content">
-                <label class="r-title">Product Name: {catalog.product}</label><br /><br />
-                <label class="r-label">Title: </label><br />
-                <label class="r-value">{mData.title}</label><br /><br />
-                <label class="r-label">Product Description:</label><br />
-                <label class="r-value">{mData.productdescription}</label><br /><br />
-                <label class="r-label">Bullet Points:</label><br />
-                <label class="r-value">{mData.bulletpoints}</label><br /><br />
-                <label class="r-label">Search Terms:</label><br />
-                <label class="r-value">{mData.searchterms}</label><br />
+        <div className="response">
+            <div className="content">
+                <label className="r-title">Product Name: {catalog.product}</label><br /><br />
+                <pre className='r-label'>{formattedOutput}</pre>
+               {/* <pre className='r-label'>{mData}</pre> */}
+            <br />
+                
             </div>
-            <div class="buttons">
-                <button onClick={regenerate} class="r-button">Regenerate Response</button>
-                <button onClick={() => setflag(!flag)} class="r-button" value="back" id="back">Back to Generate Catalog</button>
+            {loading && <LoadingSpinner />}
+            <div className="buttons">
+                <button onClick={regenerate} className="r-button">Regenerate Response</button>
+                <button onClick={() => setflag(!flag)} className="r-button" value="back" id="back">Back to Generate Catalog</button>
             </div>
+             
         </div>
+
         }
     </div>
 )
