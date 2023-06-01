@@ -1,21 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./select.css";
 
-const App = ({ onChange }) => {
+const Select3 = ({ onChange }) => {
   const options = ["Kids", "Teen", "Adult", "Senior"];
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    onChange(selectedOptions);
+  }, [selectedOptions]);
 
   const onOptionChangeHandler = (event) => {
     const selectedValue = event.target.value;
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      setSelectedOptions([...selectedOptions, selectedValue]);
+      setSelectedOptions((prevSelectedOptions) => [
+        ...prevSelectedOptions,
+        selectedValue,
+      ]);
     } else {
-      const updatedOptions = selectedOptions.filter(
-        (option) => option !== selectedValue
+      setSelectedOptions((prevSelectedOptions) =>
+        prevSelectedOptions.filter((option) => option !== selectedValue)
       );
-      setSelectedOptions(updatedOptions);
     }
   };
 
@@ -36,4 +42,4 @@ const App = ({ onChange }) => {
   );
 };
 
-export default App;
+export default Select3;

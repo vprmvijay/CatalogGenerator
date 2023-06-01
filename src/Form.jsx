@@ -14,7 +14,7 @@ function Form(){
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
     const [selectedGender, setSelectedGender] = useState('Male');
-    const [selectedAge, setSelectedAge] = useState('Adult');
+    const [selectedAge, setSelectedAge] = useState();
     const [selectedTone, setSelectedTone] = useState('Friendly');
     const [product, setProduct] = useState('');
     const [brand, setBrand] = useState('');
@@ -74,9 +74,15 @@ function Form(){
     const handleToneChange = (value) => {
         setSelectedTone(value);
       };
-    const handleAgeChange = (value) => {
-        setSelectedAge(value);
+      const handleAgeChange = (value) => {
+        if (value.length === 0) {
+          setSelectedAge([""]); // Add an empty string to indicate no selection
+        } else {
+          setSelectedAge(value);
+        }
       };
+      
+      
     const handleGenderChange = (value) => {
         setSelectedGender(value);
       };
