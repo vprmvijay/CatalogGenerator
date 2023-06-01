@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ReactDOM from "react-dom/client";
 import Form from './Form'
-
+import reportWebVitals from './reportWebVitals';
 function App() {
   return (
     <Router>
@@ -15,3 +15,4 @@ function App() {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+reportWebVitals();
