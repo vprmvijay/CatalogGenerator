@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'AmazonMarginAnalyzer'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_45660CA304C94E8399D4679DA76DD6E8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DA2303B8FAD5434E8A902DBA1E911D21 }}
           package: .
