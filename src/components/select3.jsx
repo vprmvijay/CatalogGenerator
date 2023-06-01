@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./select.css";
+import "./select3.css";
 
 const Select3 = ({ onChange }) => {
   const options = ["Kids", "Teen", "Adult", "Senior"];
@@ -28,14 +28,14 @@ const Select3 = ({ onChange }) => {
   return (
     <>
       {options.map((option, index) => (
-        <div key={index}>
+        <div className="select3" key={index}>
           <input
             type="checkbox"
             value={option}
             checked={selectedOptions.includes(option)}
             onChange={onOptionChangeHandler}
           />
-          <label>{option}</label>
+          <label className="selectl">{option}</label>
         </div>
       ))}
     </>

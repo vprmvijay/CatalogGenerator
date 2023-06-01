@@ -1,5 +1,5 @@
 import React,{ useState } from 'react';
-import keywordExtractor from 'keyword-extractor';
+// import keywordExtractor from 'keyword-extractor';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
 import Select from './components/select.jsx';
@@ -24,17 +24,17 @@ function Form(){
 
     const [mData, setmData] = useState({});
     const [keywords, setKeywords] = useState([]);
-        const handleAutomaticClick = (event) => {
-          event.preventDefault();
-          const concatenatedText = product + ' ' + features;
-          const extractedKeywords = keywordExtractor.extract(concatenatedText, {
-            language: 'english',
-            remove_digits: true,
-            return_changed_case: true,
-            remove_duplicates: true,
-          });
-          setKeywords(extractedKeywords);
-        };
+        // const handleAutomaticClick = (event) => {
+        //   event.preventDefault();
+        //   const concatenatedText = product + ' ' + features;
+        //   const extractedKeywords = keywordExtractor.extract(concatenatedText, {
+        //     language: 'english',
+        //     remove_digits: true,
+        //     return_changed_case: true,
+        //     remove_duplicates: true,
+        //   });
+        //   setKeywords(extractedKeywords);
+        // };
     
    
   
@@ -227,17 +227,17 @@ function Form(){
                 <form>
                     <div className=''>
                         <label>Product Name*</label>
-                        <input type="text" name="Product" id ="Product" placeholder="Product_Name" required onChange={handleProductChange}/>
+                        <input type="text" name="Product" id ="Product"  required onChange={handleProductChange}/>
                         
                     </div>
                     <div className='hell'>
                         <label>Brand Name*</label>
-                        <input type="text" name="brand" id ="brand" placeholder="Brand_Name" required onChange={handleBrandChange}/>
+                        <input type="text" name="brand" id ="brand" required onChange={handleBrandChange}/>
                         
                     </div>
                     <div className=''>
                         <label>Quantity*</label>
-                        <input type="text" name="quantity" id ="quantity" placeholder="Quantity" required onChange={handleQuantityChange}/>
+                        <input type="text" name="quantity" id ="quantity"  required onChange={handleQuantityChange}/>
                         
                     </div>
                     <div>
@@ -252,7 +252,7 @@ function Form(){
 
                             </div>
                             <div>
-                                <label className='label-1'>AgeGroup*</label>
+                                <label className='label-1-2'>Age Group*</label>
                                 <Select3 onChange={handleAgeChange}/>
 
                             </div>
@@ -266,13 +266,13 @@ function Form(){
                     <div className='container-1'>
                     <div>
                         <label>Features*</label>
-                        <textarea rows="9" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required onChange={handleFeatureChange}></textarea>   
+                        <textarea rows="7" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required onChange={handleFeatureChange}></textarea>   
                     </div>
                     <div>
                         <label>Keywords*</label>
                         <div>
                          <textarea
-                         rows="6"
+                         rows="7"
                          type="text"
                          name="Keywords"
                          id="Keywords"
@@ -282,9 +282,9 @@ function Form(){
                          required
                        />
 
-                    <button  onClick={handleAutomaticClick} className='button-2' >
-                    Generate Keywords Automatically
-                    </button>
+                    {/* <button  onClick={handleAutomaticClick} className='button-2' >
+                    Generate Keywords
+                    </button> */}
                     </div>
                         
                     </div>
@@ -299,7 +299,8 @@ function Form(){
         <div className="response">
             <div className="content">
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
-                <pre className='r-label'>{formattedOutput}</pre>
+                {/* <pre className='r-label'>{formattedOutput}</pre> */}
+                <textarea rows='24' value={formattedOutput}></textarea>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
                 

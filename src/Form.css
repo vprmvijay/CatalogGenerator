@@ -1,6 +1,6 @@
 .Form {
   margin: 20px;
-  background-color: #e0e0e0;
+ 
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -8,6 +8,8 @@
   justify-content: center;
   margin: 0 auto;
   
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .title {
@@ -20,7 +22,7 @@
 .Head {
   font-size: 40px;
   font-weight: bold;
-  margin-bottom: 20px;
+  
   text-align: center;
 }
 
@@ -32,6 +34,7 @@
 }
 
 .container-1 {
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -49,9 +52,11 @@
 }
 
 .response {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 20px;
   margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
 .r-title {
@@ -64,7 +69,7 @@
   margin-top: 20px;
   margin-left: 20%;
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #00b894;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -72,13 +77,24 @@
 }
 
 .r-button:hover {
-  background-color: #45a049;
+  background-color: #00a383;
 }
 
-.button-1,
+.button-1{
+  background-color: #00b894;
+  font-size: large;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  width: 30%;
+}
 .button-2 {
-  background-color: #4caf50;
-  font-size: medium;
+  background-color: #00b894;
+  font-size:small;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -90,7 +106,7 @@
 
 .button-1:hover,
 .button-2:hover {
-  background-color: #45a049;
+  background-color: #02a360cb;
 }
 
 .button-1 {
@@ -99,7 +115,7 @@
 }
 
 .button-2 {
-  margin-left: 20%;
+  margin-left: 30%;
   margin-top: 0;
 }
 
@@ -108,23 +124,34 @@
 }
 
 .label-1 {
-  padding-left: 15px;
+  padding-left: 1px;
   padding-right: 15px;
+  margin-bottom: 4px;
 }
 
 textarea {
   resize: vertical;
 }
+
 .label-1,
 .r-label {
   font-size: 16px;
   color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+.label-1-2{
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin-left: 40px;
+  justify-content: center ;
+  margin-bottom: 10px;
+}
 input[type="text"],
 textarea {
   width: 100%;
   padding: 10px;
+  margin-top: 4px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -142,22 +169,48 @@ textarea {
 
 .content {
   margin-bottom: 20px;
+  max-width: 100%;
 }
 
-
-.Form {
+/* .Form {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-}
+  border-left: 4px solid #00b894;
+} */
 
 .response {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  border-left: 4px solid #4caf50;
+  border-left: 4px solid #00b894;
 }
-.content{
-  
-    max-width: 100%;
-   
-  
+
+
+/* .Form {
+  background-color: #f6f6f6;
+} */
+
+.title,
+.Head {
+  color: #000000;
+}
+
+.button-1,
+.button-2 {
+  background-color: #00b894;
+}
+
+.button-1:hover,
+.button-2:hover {
+  background-color: #00a383;
+}
+
+textarea {
+ width: 99%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid #c2c2c2;
+  border-radius: 5px;
+  font-size: 12px; /* Reduced font size */
+  color: #555;
+  resize: vertical;
 }
