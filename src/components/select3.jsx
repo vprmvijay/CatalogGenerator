@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import "./select3.css";
 
 const Select3 = ({ onChange }) => {
   const options = ["Kids", "Teen", "Adult", "Senior"];
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  useEffect(() => {
-    onChange(selectedOptions);
-  }, [selectedOptions]);
+ 
 
   const onOptionChangeHandler = (event) => {
     const selectedValue = event.target.value;
