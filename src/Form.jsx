@@ -97,9 +97,9 @@ function Form(){
         const formattedData = dataString.replace(
           /(Title:)(.*?)(Product Description:)(.*?)(Bullet Points:)([\s\S]*)/s,
           (match, title, titleValue, desc, descValue, bullet, bulletValue) => {
-            const productDescription = addLineBreaks(descValue.trim(), 130);
-            const bulletPoints = addLineBreaksBullet(bulletValue.trim(), 130);
-            return `${title}${titleValue}\n\n${desc}\n\n${productDescription}\n\n${bullet}\n${bulletPoints}`;
+            //const productDescription = addLineBreaks(descValue.trim(), 180);
+            const bulletPoints = addLineBreaksBullet(bulletValue.trim());
+            return `${title}${titleValue}\n\n${desc}\n\n${descValue}\n\n${bullet}\n${bulletPoints}`;
           }
         );
       
@@ -107,46 +107,35 @@ function Form(){
       };
       
       
-      const addLineBreaks = (text, maxWidth) => {
-        const words = text.split(' ');
-        let currentLine = '';
-        let lines = [];
+      // const addLineBreaks = (text, maxWidth) => {
+      //   const words = text.split(' ');
+      //   let currentLine = '';
+      //   let lines = [];
       
-        words.forEach((word) => {
-          if (currentLine.length + word.length <= maxWidth) {
-            currentLine += (currentLine === '' ? '' : ' ') + word;
-          } else {
-            lines.push(currentLine);
-            currentLine = word;
-          }
-        });
+      //   words.forEach((word) => {
+      //     if (currentLine.length + word.length <= maxWidth) {
+      //       currentLine += (currentLine === '' ? '' : ' ') + word;
+      //     } else {
+      //       lines.push(currentLine);
+      //       currentLine = word;
+      //     }
+      //   });
       
-        lines.push(currentLine);
-        return lines.join('\n');
-      };
+      //   lines.push(currentLine);
+      //   return lines.join('\n');
+      // };
       
-      const addLineBreaksBullet = (text, maxWidth) => {
+      const addLineBreaksBullet = (text) => {
         const lines = [];
         const bullets = text.split(/(?=\d\.)/);
       
         bullets.forEach((bullet) => {
-          const words = bullet.trim().split(' ');
-          let currentLine = '';
-      
-          words.forEach((word) => {
-            if (currentLine.length + word.length <= maxWidth) {
-              currentLine += (currentLine === '' ? '' : ' ') + word;
-            } else {
-              lines.push(currentLine);
-              currentLine = word;
-            }
-          });
-      
-          lines.push(currentLine);
+          lines.push(bullet.trim());
         });
       
         return lines.join('\n');
       };
+      
       
       
       
@@ -319,3 +308,5 @@ function Form(){
 };
 
 export default Form;
+
+
