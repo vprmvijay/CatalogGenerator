@@ -144,7 +144,7 @@ function Form(){
 
     const handleSubmit = async (event) => {
         
-
+        
    
         const catalog = {
           product: product,
@@ -279,7 +279,7 @@ function Form(){
                     </div>
                     </div>
                     <div className='but'>
-                        <button onClick={() => { setflag(!flag); handleSubmit();}} className='button-1'  >Generate Catalog</button>
+                        <button onClick={() => { setflag(!flag); handleSubmit();}} type="button" className='button-1'  >Generate Catalog</button>
                     </div>  
                 </form>
             </div>
@@ -289,7 +289,7 @@ function Form(){
             <div className="content">
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
                 {/* <pre className='r-label'>{formattedOutput}</pre> */}
-                <textarea rows='24' value={formattedOutput}></textarea>
+                <textarea rows='24' defaultValue={formattedOutput}></textarea>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
                 
@@ -297,7 +297,8 @@ function Form(){
             {loading && <LoadingSpinner />}
             <div className="buttons">
                 <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                <button onClick={() => setflag(!flag)} className="r-button" value="back" id="back">Back to Generate Catalog</button>
+                <button onClick={regenerate} className="r-button">Back to Previous Response</button>
+                <button onClick={() => setflag(!flag)} className="r-button"  id="back">Back to Generate Catalog</button>
             </div>
              
         </div>
