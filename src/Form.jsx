@@ -24,6 +24,7 @@ function Form(){
 
     const [mData, setmData] = useState({});
     const [pData, setpData] = useState({});
+    const [nData, setnData] = useState({});
     const [keywords, setKeywords] = useState([]);
         // const handleAutomaticClick = (event) => {
         //   event.preventDefault();
@@ -176,6 +177,7 @@ function Form(){
             const data = await response.json();
             setmData(data);
             setpData(data);
+            setnData(data);
             setflag(false);
       console.log(data);
 
@@ -186,6 +188,9 @@ function Form(){
         }
         const previous = () => {
           setmData(pData);
+        }
+        const next =()=>{
+          setmData(nData);
         }
         const regenerate = async () => {
           setLoading(true);
@@ -204,6 +209,7 @@ function Form(){
               setpData(mData);
               const data = await response.json();
               setmData(data);
+              setnData(data);
               
             } catch (error) {
               console.log(error);
@@ -303,7 +309,8 @@ function Form(){
             {loading && <LoadingSpinner />}
             <div className="buttons">
                 <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                <button onClick={previous} className="r-button">Back to Previous Response</button>
+                <button onClick={previous} className="r-button">Back</button>
+                <button onClick={next} className="r-button">next</button>
                 <button onClick={() => setflag(!flag)} className="r-button"  id="back">Back to Generate Catalog</button>
             </div>
              
