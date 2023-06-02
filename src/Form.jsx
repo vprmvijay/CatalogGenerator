@@ -23,6 +23,7 @@ function Form(){
     const [loading, setLoading] = useState(false);
 
     const [mData, setmData] = useState({});
+    const [pData, setpData] = useState({});
     const [keywords, setKeywords] = useState([]);
         // const handleAutomaticClick = (event) => {
         //   event.preventDefault();
@@ -38,10 +39,10 @@ function Form(){
     
    
   
-    // const handleAutomaticClick = (event) => {
-    //     event.preventDefault(); 
-    //   setKeywords(test);
-    // };
+    const handleAutomaticClick = (event) => {
+        event.preventDefault(); 
+      setKeywords(test);
+    };
   
     const handleManualChange = (event) => {
         
@@ -174,6 +175,7 @@ function Form(){
       
             const data = await response.json();
             setmData(data);
+            setpData(data);
             setflag(false);
       console.log(data);
 
@@ -181,6 +183,9 @@ function Form(){
             console.log(error);
           }
          setLoading(false);
+        }
+        const previous = () => {
+          setmData(pData);
         }
         const regenerate = async () => {
           setLoading(true);
@@ -196,7 +201,7 @@ function Form(){
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
-        
+              setpData(mData);
               const data = await response.json();
               setmData(data);
               
@@ -290,7 +295,7 @@ function Form(){
             <div className="content">
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
                 {/* <pre className='r-label'>{formattedOutput}</pre> */}
-                <textarea rows='24' defaultValue={formattedOutput}></textarea>
+                <textarea rows='24' value={formattedOutput} onChange={handleAutomaticClick}></textarea>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
                 
@@ -298,7 +303,7 @@ function Form(){
             {loading && <LoadingSpinner />}
             <div className="buttons">
                 <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                <button onClick={regenerate} className="r-button">Back to Previous Response</button>
+                <button onClick={previous} className="r-button">Back to Previous Response</button>
                 <button onClick={() => setflag(!flag)} className="r-button"  id="back">Back to Generate Catalog</button>
             </div>
              
