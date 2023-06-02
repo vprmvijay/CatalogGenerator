@@ -263,6 +263,7 @@ function Form(){
                          <textarea
                          rows="7"
                          type="text"
+                        
                          name="Keywords"
                          id="Keywords"
                          placeholder="Values must be separated by comma(,)"
