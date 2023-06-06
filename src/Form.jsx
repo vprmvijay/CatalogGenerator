@@ -26,6 +26,11 @@ function Form(){
     const [pData, setpData] = useState({});
     const [nData, setnData] = useState({});
     const [keywords, setKeywords] = useState([]);
+    const [responses, setResponses] = useState([]);
+    const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
+    const totalResponses = responses.length;
+
+
         // const handleAutomaticClick = (event) => {
         //   event.preventDefault();
         //   const concatenatedText = product + ' ' + features;
@@ -95,6 +100,9 @@ function Form(){
 
   
       const formatData = (data) => {
+        if (!data) {
+          return ''; // Return an empty string if data is undefined or null
+        }
         const dataString = JSON.stringify(data); // Convert data object to string
         const formattedData = dataString.replace(
           /(Title:)(.*?)(Product Description:)(.*?)(Bullet Points:)([\s\S]*)/s,
@@ -142,7 +150,9 @@ function Form(){
       
       
       // Usage
-      const formattedOutput = formatData(mData);
+      const currentResponse = responses[currentResponseIndex];
+const formattedOutput = currentResponse ? formatData(currentResponse) : '';
+
 
     const handleSubmit = async (event) => {
         
@@ -178,6 +188,7 @@ function Form(){
             setmData(data);
             setpData(data);
             setnData(data);
+            setResponses(prevResponses => [...prevResponses, data]);
             setflag(false);
       console.log(data);
 
@@ -187,11 +198,17 @@ function Form(){
          setLoading(false);
         }
         const previous = () => {
-          setmData(pData);
-        }
-        const next =()=>{
-          setmData(nData);
-        }
+          if (currentResponseIndex > 0) {
+            setCurrentResponseIndex(prevIndex => prevIndex - 1);
+          }
+        };
+        
+        const next = () => {
+          if (currentResponseIndex < totalResponses - 1) {
+            setCurrentResponseIndex(prevIndex => prevIndex + 1);
+          }
+        };
+        
         const regenerate = async () => {
           setLoading(true);
             try {
@@ -208,6 +225,8 @@ function Form(){
               }
               setpData(mData);
               const data = await response.json();
+              setResponses(prevResponses => [...prevResponses, data]);
+              setCurrentResponseIndex(totalResponses);
               setmData(data);
               setnData(data);
               
@@ -308,10 +327,13 @@ function Form(){
             </div>
             {loading && <LoadingSpinner />}
             <div className="buttons">
-                <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                <button onClick={previous} className="r-button">Back</button>
-                <button onClick={next} className="r-button">next</button>
-                <button onClick={() => setflag(!flag)} className="r-button"  id="back">Back to Generate Catalog</button>
+            <div className="buttons">
+  <button onClick={regenerate} className="r-button">Regenerate Response</button>
+  <button onClick={previous} className="r-button" disabled={currentResponseIndex === 0}>Previous</button>
+  <button onClick={next} className="r-button" disabled={currentResponseIndex === totalResponses - 1}>Next</button>
+  <button onClick={() => setflag(!flag)} className="r-button" id="back">Back to Generate Catalog</button>
+</div>
+
             </div>
              
         </div>
