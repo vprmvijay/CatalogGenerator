@@ -22,9 +22,8 @@ function Form(){
     const [features, setFeatures] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const [mData, setmData] = useState({});
-    const [pData, setpData] = useState({});
-    const [nData, setnData] = useState({});
+    
+
     const [keywords, setKeywords] = useState([]);
     const [responses, setResponses] = useState([]);
     const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
@@ -185,9 +184,8 @@ const formattedOutput = currentResponse ? formatData(currentResponse) : '';
             }
       
             const data = await response.json();
-            setmData(data);
-            setpData(data);
-            setnData(data);
+            
+           
             setResponses(prevResponses => [...prevResponses, data]);
             setflag(false);
       console.log(data);
@@ -223,12 +221,12 @@ const formattedOutput = currentResponse ? formatData(currentResponse) : '';
               if (!response.ok) {
                 throw new Error('Network response was not ok');
               }
-              setpData(mData);
+              
               const data = await response.json();
               setResponses(prevResponses => [...prevResponses, data]);
               setCurrentResponseIndex(totalResponses);
-              setmData(data);
-              setnData(data);
+              
+              
               
             } catch (error) {
               console.log(error);
@@ -320,6 +318,7 @@ const formattedOutput = currentResponse ? formatData(currentResponse) : '';
             <div className="content">
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
                 {/* <pre className='r-label'>{formattedOutput}</pre> */}
+                <label className=''>Response Number: { currentResponseIndex }</label>
                 <textarea rows='24' value={formattedOutput} onChange={handleAutomaticClick}></textarea>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
