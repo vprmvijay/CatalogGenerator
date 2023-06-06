@@ -200,6 +200,7 @@ function Form(){
             
            
             setResponses(prevResponses => [...prevResponses, formatData(data)]);
+            setCurrentResponseIndex(totalResponses);
             setflag(false);
       console.log(data);
 
