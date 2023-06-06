@@ -162,8 +162,8 @@ function Form(){
       
       
       // Usage
-      const currentResponse = responses[currentResponseIndex];
-      const formattedOutput = currentResponse ? formatData(currentResponse) : '';
+      //const currentResponse = responses[currentResponseIndex];
+      //const formattedOutput = currentResponse ? formatData(currentResponse) : '';
 
 
     const handleSubmit = async (event) => {
@@ -199,7 +199,7 @@ function Form(){
             const data = await response.json();
             
            
-            setResponses(prevResponses => [...prevResponses, data]);
+            setResponses(prevResponses => [...prevResponses, formatData(data)]);
             setflag(false);
       console.log(data);
 
@@ -239,7 +239,7 @@ function Form(){
               }
               
               const data = await response.json();
-              setResponses(prevResponses => [...prevResponses, data]);
+              setResponses(prevResponses => [...prevResponses, formatData(data)]);
               setCurrentResponseIndex(totalResponses);
               
               
@@ -335,7 +335,7 @@ function Form(){
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
                 {/* <pre className='r-label'>{formattedOutput}</pre> */}
                 <label className=''>Response Number: { currentResponseIndex }</label>
-                <textarea rows='24' value={formattedOutput} onChange={handleAutomaticClick}></textarea>
+                <textarea rows='24' value={responses[currentResponseIndex]} onChange={handleAutomaticClick}></textarea>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
                 
