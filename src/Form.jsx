@@ -28,7 +28,7 @@ function Form(){
     const [responses, setResponses] = useState([]);
     const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
     const totalResponses = responses.length;
-    const [isManuallyModified, setIsManuallyModified] = useState(false);
+    //const [isManuallyModified, setIsManuallyModified] = useState(false);
 
         // const handleAutomaticClick = (event) => {
         //   event.preventDefault();
@@ -55,7 +55,7 @@ function Form(){
     const handleAutomaticClick = (event) => {
         event.preventDefault(); 
         updateResponseElement(currentResponseIndex, event.target.value);
-        setIsManuallyModified(true);
+        //setIsManuallyModified(true);
        console.log(event.target.value)
     };
   
@@ -111,10 +111,10 @@ function Form(){
         if (!data) {
           return ''; // Return an empty string if data is undefined or null
         }
-        if (isManuallyModified)
-        {
-          return data;
-        }
+        // if (isManuallyModified)
+        // {
+        //   return data;
+        // }
         const dataString = JSON.stringify(data); // Convert data object to string
         const formattedData = dataString.replace(
           /(Title:)(.*?)(Product Description:)(.*?)(Bullet Points:)([\s\S]*)/s,
@@ -210,21 +210,21 @@ function Form(){
         }
         const previous = () => {
           if (currentResponseIndex > 0) {
-            setIsManuallyModified(false);
+            //setIsManuallyModified(false);
             setCurrentResponseIndex(prevIndex => prevIndex - 1);
           }
         };
         
         const next = () => {
           if (currentResponseIndex < totalResponses - 1) {
-            setIsManuallyModified(false);
+            //setIsManuallyModified(false);
             setCurrentResponseIndex(prevIndex => prevIndex + 1);
           }
         };
         
         const regenerate = async () => {
           setLoading(true);
-          setIsManuallyModified(false);
+          //setIsManuallyModified(false);
             try {
               const response = await fetch(`https://cataloggeneratorv1.azurewebsites.net/api/CatalogGeneratorV1?product=${catalog.product}&brand=${catalog.brand}&marketplace=${catalog.marketplace}&gender=${catalog.gender}&age=${catalog.age}&quantity=${catalog.quantity}&tone=${catalog.tone}&features=${catalog.features}&keywords=${catalog.keywords}`, {
                 method: 'POST',
