@@ -117,7 +117,7 @@ function Form(){
         // }
         const dataString = JSON.stringify(data); // Convert data object to string
         const formattedData = dataString.replace(
-          /(Title:)(.*?)(Product Description:)(.*?)(Bullet Points:)([\s\S]*)/s,
+          /(Title:)(.*?)(Product Description:)(.*?)(Features:)([\s\S]*)/s,
           (match, title, titleValue, desc, descValue, bullet, bulletValue) => {
             //const productDescription = addLineBreaks(descValue.trim(), 180);
             const bulletPoints = addLineBreaksBullet(bulletValue.trim());
