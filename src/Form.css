@@ -1,32 +1,66 @@
-.Form {
-  margin: 20px;
- 
-  padding: 20px;
+.brahma{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  
+}
+.bar{
+  margin-left: 3%;
+  
+}
+.page{
+  display: flex;
+  flex-direction: row;
+}
+.footer{
+  margin-left: 40%;
+}
+.whats{
+  color:green;
+ 
+  
+}
+.split{
+  display: flex;
+  flex-direction: row;
+}
+.Form {
+ 
+  max-width: 40%;
+  
+  display: flex;
+  flex-direction: column;
+ 
+margin-left: 3%;
+margin-right: 3%;
   
   border-radius: 5px;
   font-family: Arial, Helvetica, sans-serif;
 }
-.brahma{
-  display: flex;
-  flex-direction: row;
+label{
+  font-size: 13px;
 }
+
 .title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
+  
+
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 26px;
+line-height: 30px;
+
+color: rgba(12, 3, 33, 0.65);
 }
 
 .Head {
-  font-size: 40px;
-  font-weight: bold;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 59px;
   
-  text-align: center;
+  color: #0E0E2E;
 }
 
 .container {
@@ -45,7 +79,7 @@
 }
 
 .container > div {
-  flex-basis: 23%;
+  flex-basis: 40%;
   margin-bottom: 20px;
 }
 
@@ -68,12 +102,22 @@
   font-weight: bold;
   margin-bottom: 10px;
 }
+.b-button{
+  
+  background: rgba(84, 168, 252, 1);
+  margin-left: 40%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 
+}
 .r-button {
   margin-top: 20px;
   margin-left: 12%;
   padding: 10px 20px;
-  background-color: #00b894;
+  background: rgba(84, 168, 252, 1);
+
   color: #fff;
   border: none;
   cursor: pointer;
@@ -85,7 +129,8 @@
 }
 
 .button-1{
-  background-color: #00b894;
+  background: rgba(84, 168, 252, 1);
+
   font-size: large;
   color: white;
   padding: 10px 15px;
@@ -97,7 +142,8 @@
   width: 30%;
 }
 .button-2 {
-  background-color: #00b894;
+  background: rgba(84, 168, 252, 1);
+
   font-size:small;
   color: white;
   padding: 10px 15px;
@@ -116,6 +162,7 @@
 .button-1 {
   display: block;
   margin: 0 auto;
+  width: auto;
 }
 
 .button-2 {
@@ -185,7 +232,8 @@ textarea {
 .response {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  border-left: 4px solid #00b894;
+  border-left: 4px solid  rgba(84, 168, 252, 1);
+  ;
 }
 
 
@@ -193,14 +241,13 @@ textarea {
   background-color: #f6f6f6;
 } */
 
-.title,
-.Head {
-  color: #000000;
-}
+
 
 .button-1,
 .button-2 {
-  background-color: #00b894;
+  background: linear-gradient(90deg, #56D0FA 0%, #4B3CFF 100%);
+border-radius: 4px;
+
 }
 
 .button-1:hover,

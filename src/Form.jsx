@@ -1,4 +1,4 @@
-import React,{ useState ,useRef } from 'react';
+import React,{ useState } from 'react';
 // import keywordExtractor from 'keyword-extractor';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
@@ -9,7 +9,7 @@ import Select4 from './components/select4.jsx';
 
 
 function Form(){
-    const ref = useRef(null);
+    
     const [flag,setflag] = useState(true);
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
@@ -28,6 +28,53 @@ function Form(){
     const [responses, setResponses] = useState([]);
     const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
     const totalResponses = responses.length;
+    const [title, setTitle] = useState('');
+    const [productDescription, setProductDescription] = useState('');
+    const [bulletPoints, setBulletPoints] = useState('');
+
+    const getTitle = () => {
+    if (responses[currentResponseIndex]) {
+      const matches = responses[currentResponseIndex].match(/(Title:)(.*?)(Product Description:)/s);
+    if (matches && matches[2]) {
+      return matches[2].trim();
+    }
+    }
+    return '';
+    };
+
+    const getProductDescription = () => {
+      if (responses[currentResponseIndex]) {
+        const matches = responses[currentResponseIndex].match(/(Product Description:)(.*?)(Bullet Points:)/s);
+        if (matches && matches[2]) {
+          return matches[2].trim();
+        }
+      }
+    return '';
+  };
+
+  const getBulletPoints = () => {
+    if (responses[currentResponseIndex]) {
+      const matches = responses[currentResponseIndex].match(/(Bullet Points:)([\s\S]*)/s);
+      if (matches && matches[2]) {
+        const bulletPoints = matches[2].trim();
+        const bulletPointArray = bulletPoints.split("Bullet point:");
+        return bulletPointArray;
+      }
+    }
+    return [];
+  };
+  
+
+const handleTitleChange = (event) => {
+  setTitle(event.target.value);
+};
+
+const handleProductDescriptionChange = (event) => {
+  setProductDescription(event.target.value);
+};
+
+
+
     //const [isManuallyModified, setIsManuallyModified] = useState(false);
 
         // const handleAutomaticClick = (event) => {
@@ -104,32 +151,10 @@ function Form(){
     const handleMarketplaceChange = (value) => {
         setSelectedMarketplace(value);
       };
-      const copyToClipboard = () => {
-        ref.current.select();
-        document.execCommand('copy');
-      };
+   
 
   
-      const formatData = (data) => {
-        if (!data) {
-          return ''; // Return an empty string if data is undefined or null
-        }
-        // if (isManuallyModified)
-        // {
-        //   return data;
-        // }
-        const dataString = JSON.stringify(data); // Convert data object to string
-        const formattedData = dataString.replace(
-          /(Title:)(.*?)(Product Description:)(.*?)(Features:)([\s\S]*)/s,
-          (match, title, titleValue, desc, descValue, bullet, bulletValue) => {
-            //const productDescription = addLineBreaks(descValue.trim(), 180);
-            const bulletPoints = addLineBreaksBullet(bulletValue.trim());
-            return `${title}${titleValue}\n\n${desc}\n\n${descValue}\n\n${bullet}\n${bulletPoints}`;
-          }
-        );
       
-        return formattedData;
-      };
       
       
       // const addLineBreaks = (text, maxWidth) => {
@@ -150,24 +175,16 @@ function Form(){
       //   return lines.join('\n');
       // };
       
-      const addLineBreaksBullet = (text) => {
-        const lines = [];
-        const bullets = text.split("Bullet point:");
-      
-        bullets.forEach((bullet) => {
-          lines.push(bullet.trim());
-        });
-      
-        return lines.join('\n');
-      };
-      
-      
-      
       
       // Usage
       //const currentResponse = responses[currentResponseIndex];
       //const formattedOutput = currentResponse ? formatData(currentResponse) : '';
-
+      const handleBulletPointChange = (event, index) => {
+        const newBulletPoints = [...getBulletPoints()];
+        newBulletPoints[index] = event.target.value;
+        setBulletPoints(newBulletPoints.join(' - '));
+      };
+      
 
     const handleSubmit = async (event) => {
         
@@ -202,7 +219,7 @@ function Form(){
             const data = await response.json();
             
            
-            setResponses(prevResponses => [...prevResponses, formatData(data)]);
+            setResponses(prevResponses => [...prevResponses, data]);
             setCurrentResponseIndex(totalResponses);
             setflag(false);
       console.log(data);
@@ -243,7 +260,7 @@ function Form(){
               }
               
               const data = await response.json();
-              setResponses(prevResponses => [...prevResponses, formatData(data)]);
+              setResponses(prevResponses => [...prevResponses, data]);
               setCurrentResponseIndex(totalResponses);
               
               
@@ -255,12 +272,22 @@ function Form(){
     
           }
     return(
-        <div>
-        { flag ?
-        <div className='Form'>
-            <label className='Head'>Amazon Catalog Generator</label><br />
-            <label className='title'>Generate content for single listing</label>
-            <div className="">
+        <div className='brahma'>
+            <div className='bar'>
+                <div className='split'>
+                <div>
+                  <label className='Head'>brahmã</label><br />
+                  <label className='title'>Generate Amazon Catalog Content</label>
+                </div>
+                <div>
+                <button className='b-button'>Help</button>
+                </div>
+                  
+                </div>
+                
+            </div>
+            <div className='page'>
+              <div className="Form">
                 <form>
                     <div className=''>
                         <label>Product Name*</label>
@@ -286,12 +313,12 @@ function Form(){
                             <div>
                                 <label className='label-1'>Select Gender*</label>
                                 <Select2 onChange={handleGenderChange}/>
-
                             </div>
+                        </div>
+                        <div className='container'>
                             <div>
-                                <label className='label-1-2'>Select Age Group*</label>
+                                <label className='label-1-2'>Age Group*</label>
                                 <Select3 onChange={handleAgeChange}/>
-
                             </div>
                             <div>
                                 <label className='label-1'>Select Tone*</label>
@@ -311,7 +338,6 @@ function Form(){
                          <textarea
                          rows="7"
                          type="text"
-                        
                          name="Keywords"
                          id="Keywords"
                          placeholder="Values must be separated by comma(,)"
@@ -331,34 +357,48 @@ function Form(){
                         <button onClick={() => { setflag(!flag); handleSubmit();}} type="button" className='button-1'  >Generate Catalog</button>
                     </div>  
                 </form>
-            </div>
-        </div>
-        : 
-        <div className="response">
-            <div className="content">
-                <label className="r-title">Product Name: {catalog.product}</label><br /><br />
-                {/* <pre className='r-label'>{formattedOutput}</pre> */}
-                <label className=''>Response Number: { currentResponseIndex }</label>
-                <textarea ref={ref} rows='24' value={responses[currentResponseIndex]} onChange={handleAutomaticClick}></textarea>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard} fill="currentColor" class="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
-               {/* <pre className='r-label'>{mData}</pre> */}
-            <br />
-                
-            </div>
-            {loading && <LoadingSpinner />}
-            <div className="buttons">
-              <div className="buttons">
-                <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                <button onClick={previous} className="r-button" disabled={currentResponseIndex === 0}>Previous</button>
-                <button onClick={next} className="r-button" disabled={currentResponseIndex === totalResponses - 1}>Next</button>
-                <button onClick={() => setflag(!flag)} className="r-button" id="back">Back to Generate Catalog</button>
               </div>
+              <div className="response">
+                      <div className="content">
+                <label className="r-title">Product Name: {catalog.product}</label><br /><br />
+                <label className=''>Response Number: {currentResponseIndex}</label>
+                <div>
+                  <label>Title:</label>
+                  <textarea rows="4" value={getTitle()} onChange={handleTitleChange}></textarea>
+                </div>
+                <div>
+                  <label>Product Description:</label>
+                  <textarea rows="10" value={getProductDescription()} onChange={handleProductDescriptionChange}></textarea>
+                </div>
+                <div>
+              <label>Bullet Points:</label>
+              {getBulletPoints().map((bulletPoint, index) => (
+                <textarea
+                  key={index}
+                  rows={3}
+                  value={bulletPoint}
+                  onChange={event => handleBulletPointChange(event, index)}
+                />
+              ))}
             </div>
-             
+            
+                <br />
+                </div>
+                {loading && <LoadingSpinner />}
+                <div className="buttons">
+                  {/* <div className="buttons">
+                    <button onClick={regenerate} className="r-button">Regenerate Response</button>
+                    <button onClick={previous} className="r-button" disabled={currentResponseIndex === 0}>Previous</button>
+                    <button onClick={next} className="r-button" disabled={currentResponseIndex === totalResponses - 1}>Next</button>
+                    <button onClick={() => setflag(!flag)} className="r-button" id="back">Back to Generate Catalog</button>
+                  </div> */}
+                </div>
+              </div>  
+            </div>
+            <div>
+              <label className='footer'>To give a feedback, please click on the <span className='whats'>what'sapp</span> button.</label>
+            </div>
         </div>
-
-        }
-    </div>
 )
 };
 
