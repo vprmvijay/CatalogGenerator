@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState ,useRef } from 'react';
 // import keywordExtractor from 'keyword-extractor';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
@@ -9,7 +9,7 @@ import Select4 from './components/select4.jsx';
 
 
 function Form(){
-    
+    const ref = useRef(null);
     const [flag,setflag] = useState(true);
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
@@ -104,7 +104,10 @@ function Form(){
     const handleMarketplaceChange = (value) => {
         setSelectedMarketplace(value);
       };
-   
+      const copyToClipboard = () => {
+        ref.current.select();
+        document.execCommand('copy');
+      };
 
   
       const formatData = (data) => {
@@ -336,7 +339,8 @@ function Form(){
                 <label className="r-title">Product Name: {catalog.product}</label><br /><br />
                 {/* <pre className='r-label'>{formattedOutput}</pre> */}
                 <label className=''>Response Number: { currentResponseIndex }</label>
-                <textarea rows='24' value={responses[currentResponseIndex]} onChange={handleAutomaticClick}></textarea>
+                <textarea ref={ref} rows='24' value={responses[currentResponseIndex]} onChange={handleAutomaticClick}></textarea>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard} fill="currentColor" class="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
                {/* <pre className='r-label'>{mData}</pre> */}
             <br />
                 
