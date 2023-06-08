@@ -149,7 +149,7 @@ function Form(){
       
       const addLineBreaksBullet = (text) => {
         const lines = [];
-        const bullets = text.split(/(?=\d\.)/);
+        const bullets = text.split("Bullet point:");
       
         bullets.forEach((bullet) => {
           lines.push(bullet.trim());
@@ -286,7 +286,7 @@ function Form(){
 
                             </div>
                             <div>
-                                <label className='label-1-2'>Age Group*</label>
+                                <label className='label-1-2'>Select Age Group*</label>
                                 <Select3 onChange={handleAgeChange}/>
 
                             </div>
