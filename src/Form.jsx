@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState} from 'react';
 // import keywordExtractor from 'keyword-extractor';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
@@ -32,10 +32,22 @@ function Form(){
     const [productDescription, setProductDescription] = useState('');
     const [bulletPoints, setBulletPoints] = useState('');
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const [isCollapsedArray, setIsCollapsedArray] = useState([]);
 
-    const getTitle = () => {
-    if (responses[currentResponseIndex]) {
-      const matches = responses[currentResponseIndex].match(/(Title:)(.*?)(Product Description:)/s);
+    const copyToClipboard = (text) => {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          console.log('Text copied to clipboard');
+        })
+        .catch((error) => {
+          console.error('Error copying text to clipboard:', error);
+        });
+    };
+    
+
+    const getTitle = (index) => {
+    if (responses[index]) {
+      const matches = responses[index].match(/(Title:)(.*?)(Product Description:)/s);
     if (matches && matches[2]) {
       return matches[2].trim();
     }
@@ -43,9 +55,9 @@ function Form(){
     return '';
     };
 
-    const getProductDescription = () => {
-      if (responses[currentResponseIndex]) {
-        const matches = responses[currentResponseIndex].match(/(Product Description:)(.*?)(Features:)/s);
+    const getProductDescription = (index) => {
+      if (responses[index]) {
+        const matches = responses[index].match(/(Product Description:)(.*?)(Features:)/s);
         if (matches && matches[2]) {
           return matches[2].trim();
         }
@@ -53,9 +65,9 @@ function Form(){
     return '';
   };
 
-  const getBulletPoints = () => {
-    if (responses[currentResponseIndex]) {
-      const matches = responses[currentResponseIndex].match(/(Features:)([\s\S]*)/s);
+  const getBulletPoints = (index) => {
+    if (responses[index]) {
+      const matches = responses[index].match(/(Features:)([\s\S]*)/s);
       if (matches && matches[2]) {
         const bulletPoints = matches[2].trim();
         const bulletPointArray = bulletPoints.split("Bullet point:");
@@ -103,6 +115,7 @@ const handleProductDescriptionChange = (event) => {
     const handleAutomaticClick = (event) => {
         event.preventDefault(); 
         updateResponseElement(currentResponseIndex, event.target.value);
+        setIsCollapsedArray(responses.map(() => true))
         //setIsManuallyModified(true);
        console.log(event.target.value)
     };
@@ -186,7 +199,7 @@ const handleProductDescriptionChange = (event) => {
         setBulletPoints(newBulletPoints.join(' - '));
       };
       
-
+      
     const handleSubmit = async (event) => {
         
         
@@ -258,7 +271,7 @@ const handleProductDescriptionChange = (event) => {
               console.log(error);
             }
             setLoading(false);
-    
+            
           }
     return(
         <div className='brahma'>
@@ -352,39 +365,58 @@ const handleProductDescriptionChange = (event) => {
 
               
               <div className="response">
-              {responses.map((response, index) => (
-              <div className='rescon'>
-              <div onClick={() => setIsCollapsed(!isCollapsed)} className="collapse-button"><button className='res-button'>Response {currentResponseIndex}</button></div>
-              {!isCollapsed && (
-                <div className="content">
-                               
-                <div>
-                  <label>Title:</label>
-                  <textarea rows="4" value={getTitle()} onChange={handleTitleChange}></textarea>
-                </div>
-                <div>
-                  <label>Product Description:</label>
-                  <textarea rows="10" value={getProductDescription()} onChange={handleProductDescriptionChange}></textarea>
-                </div>
-                <div>
-              <label>Bullet Points:</label>
-              {getBulletPoints().map((bulletPoint, index) => (
-                <textarea
-                  key={index}
-                  rows={3}
-                  value={bulletPoint}
-                  onChange={event => handleBulletPointChange(event, index)}
-                />
-              ))}
-            
-            </div>
-                
-                {loading && <LoadingSpinner />}
-                </div>
-                
-                )}
-                </div>
-                 ))}
+             {responses.map((response,index)=> (
+               <div key={index} className='rescon'>
+               <div onClick={() => setIsCollapsedArray(prevArray => {
+                 const newArray = [...prevArray];
+                 newArray[index] = !newArray[index]; // Toggle the collapse state for the current index
+                 return newArray;
+               })} className="collapse-button">
+                 <button type="button" className='res-button'>Response {index}</button>
+               </div>
+               {!isCollapsedArray[index] && (
+                 <div className="content">
+                                
+                 <div>
+                   <label>Title:</label>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getTitle(index))} fill="currentColor" class="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
+                   <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange}></textarea>
+
+                 </div>
+                 <div>
+                   <label>Product Description:</label>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getProductDescription(index))} fill="currentColor" class="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
+                   
+                   <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
+                 </div>
+                 <div>
+               <label>Bullet Points:</label>
+               {getBulletPoints(index).map((bulletPoint, index) => (
+                 <div key={index}>
+                   {index > 0 && (
+                     <>
+                       <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}</label>
+                       <textarea
+                         id={`bulletPoint${index}`}
+                         rows={3}
+                         value={bulletPoint}
+                         onChange={event => handleBulletPointChange(event, index)}
+                       />
+                     </>
+                   )}
+                 </div>
+               ))}
+ 
+             
+             </div>
+                 
+                 {loading && <LoadingSpinner />}
+                 </div>
+               )}
+             </div>
+             ))}
+             
+             
               </div>
             </div>
             <div>

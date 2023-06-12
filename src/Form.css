@@ -19,21 +19,23 @@
   display: flex;
   flex-direction: row;
 }
-.rescon{
-  display:flex;
+.rescon {
+  display: flex;
   flex-direction: column;
   width: 93%;
   margin: 2%;
-  padding:1.5%;
+  padding: 1.5%;
   background: #FFFFFF;
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.25);  
   border-radius: 6px;
-  
+  max-height: 500px;
+   /* Enable scrolling when content exceeds the height */
 }
+
 .collapse-button{
   text-decoration: none;
   height:50px;
-  
+  margin-bottom: inherit;
   background: #FFFFFF;
 box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.25);
 border-radius: 6px;
@@ -48,6 +50,7 @@ color: #fff;
   border: none;
   padding: 10px 20px;
   width:25%;
+
 }
 .footer{
   margin-left: 40%;
@@ -145,7 +148,7 @@ color: rgba(12, 3, 33, 0.65);
 .helpbutton{
 position: absolute;
 right:5%;
-top:15%
+top:7%
 }
 .b-button{
   
@@ -267,6 +270,25 @@ textarea {
 .content {
   margin-bottom: 20px;
   max-width: 100%;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888888 #F5F5F5;
+}
+
+/* Track */
+.content::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+}
+
+/* Handle */
+.content::-webkit-scrollbar-thumb {
+  background: rgba(14, 14, 46, 0.8);
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+.content::-webkit-scrollbar-thumb:hover {
+  background-color: #555555;
 }
 
 /* .Form {
@@ -305,6 +327,7 @@ textarea {
   font-size: 12px; /* Reduced font size */
   color: #555;
   resize: vertical;
+
 }
 
 
