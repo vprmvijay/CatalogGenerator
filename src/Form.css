@@ -1,15 +1,53 @@
 .brahma{
   display: flex;
   flex-direction: column;
-  
+  background: #FAFAFA;
 }
 .bar{
+  display:flex;
+  flex-wrap: wrap;
   margin-left: 3%;
-  
+  width: 100%;
+  justify-content: space-between;
+}
+.line{
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  margin-left: 2%;
+  margin-bottom: 1%;
 }
 .page{
   display: flex;
   flex-direction: row;
+}
+.rescon{
+  display:flex;
+  flex-direction: column;
+  width: 93%;
+  margin: 2%;
+  padding:1.5%;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.25);  
+  border-radius: 6px;
+  
+}
+.collapse-button{
+  text-decoration: none;
+  height:50px;
+  
+  background: #FFFFFF;
+box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.25);
+border-radius: 6px;
+}
+.res-button{
+  background: #54A8FC;
+border-radius: 4px;
+text-decoration: none;
+margin-top: 6px;
+margin-left: 20px;
+color: #fff;
+  border: none;
+  padding: 10px 20px;
+  width:25%;
 }
 .footer{
   margin-left: 40%;
@@ -21,7 +59,16 @@
 }
 .split{
   display: flex;
+
   flex-direction: row;
+  overflow: auto;
+}
+.response {
+  font-size: 14px;
+  width: 55%;
+  background: rgba(217, 217, 217, 0.3);
+  border-radius: 6px;
+
 }
 .Form {
  
@@ -88,28 +135,29 @@ color: rgba(12, 3, 33, 0.65);
   margin-bottom: 20px;
 }
 
-.response {
-  background-color: #ffffff;
-  padding: 20px;
-  margin-top: 20px;
-  min-width: 45%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
+
 
 .r-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
+.helpbutton{
+position: absolute;
+right:5%;
+top:15%
+}
 .b-button{
   
-  background: rgba(84, 168, 252, 1);
-  margin-left: 40%;
+  background: linear-gradient(90deg, #56D0FA 0%, #4B3CFF 100%);
+  width: 90px;
+  height: 30px;
+  font-size: large;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  margin-left: auto;
 
 }
 .r-button {
@@ -214,9 +262,7 @@ textarea {
   border: 1px solid red;
 }
 
-.response {
-  font-size: 14px;
-}
+
 
 .content {
   margin-bottom: 20px;
@@ -229,12 +275,7 @@ textarea {
   border-left: 4px solid #00b894;
 } */
 
-.response {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  border-left: 4px solid  rgba(84, 168, 252, 1);
-  ;
-}
+
 
 
 /* .Form {
@@ -256,7 +297,7 @@ border-radius: 4px;
 }
 
 textarea {
- width: 99%;
+ width: 96%;
   padding: 10px;
   margin-bottom: 10px;
   border: 2px solid #c2c2c2;
@@ -265,3 +306,5 @@ textarea {
   color: #555;
   resize: vertical;
 }
+
+

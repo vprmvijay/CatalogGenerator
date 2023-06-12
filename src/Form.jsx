@@ -31,6 +31,7 @@ function Form(){
     const [title, setTitle] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [bulletPoints, setBulletPoints] = useState('');
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
     const getTitle = () => {
     if (responses[currentResponseIndex]) {
@@ -44,7 +45,7 @@ function Form(){
 
     const getProductDescription = () => {
       if (responses[currentResponseIndex]) {
-        const matches = responses[currentResponseIndex].match(/(Product Description:)(.*?)(Bullet Points:)/s);
+        const matches = responses[currentResponseIndex].match(/(Product Description:)(.*?)(Features:)/s);
         if (matches && matches[2]) {
           return matches[2].trim();
         }
@@ -54,7 +55,7 @@ function Form(){
 
   const getBulletPoints = () => {
     if (responses[currentResponseIndex]) {
-      const matches = responses[currentResponseIndex].match(/(Bullet Points:)([\s\S]*)/s);
+      const matches = responses[currentResponseIndex].match(/(Features:)([\s\S]*)/s);
       if (matches && matches[2]) {
         const bulletPoints = matches[2].trim();
         const bulletPointArray = bulletPoints.split("Bullet point:");
@@ -229,19 +230,7 @@ const handleProductDescriptionChange = (event) => {
           }
          setLoading(false);
         }
-        const previous = () => {
-          if (currentResponseIndex > 0) {
-            //setIsManuallyModified(false);
-            setCurrentResponseIndex(prevIndex => prevIndex - 1);
-          }
-        };
         
-        const next = () => {
-          if (currentResponseIndex < totalResponses - 1) {
-            //setIsManuallyModified(false);
-            setCurrentResponseIndex(prevIndex => prevIndex + 1);
-          }
-        };
         
         const regenerate = async () => {
           setLoading(true);
@@ -275,17 +264,18 @@ const handleProductDescriptionChange = (event) => {
         <div className='brahma'>
             <div className='bar'>
                 <div className='split'>
-                <div>
+                <div className='splittitle'>
                   <label className='Head'>brahmã</label><br />
                   <label className='title'>Generate Amazon Catalog Content</label>
                 </div>
-                <div>
+                <div className='helpbutton'>
                 <button className='b-button'>Help</button>
                 </div>
                   
                 </div>
                 
             </div>
+            <div className="line" /> 
             <div className='page'>
               <div className="Form">
                 <form>
@@ -358,10 +348,16 @@ const handleProductDescriptionChange = (event) => {
                     </div>  
                 </form>
               </div>
+             
+
+              
               <div className="response">
-                      <div className="content">
-                <label className="r-title">Product Name: {catalog.product}</label><br /><br />
-                <label className=''>Response Number: {currentResponseIndex}</label>
+              {responses.map((response, index) => (
+              <div className='rescon'>
+              <div onClick={() => setIsCollapsed(!isCollapsed)} className="collapse-button"><button className='res-button'>Response {currentResponseIndex}</button></div>
+              {!isCollapsed && (
+                <div className="content">
+                               
                 <div>
                   <label>Title:</label>
                   <textarea rows="4" value={getTitle()} onChange={handleTitleChange}></textarea>
@@ -380,20 +376,16 @@ const handleProductDescriptionChange = (event) => {
                   onChange={event => handleBulletPointChange(event, index)}
                 />
               ))}
-            </div>
             
-                <br />
-                </div>
+            </div>
+                
                 {loading && <LoadingSpinner />}
-                <div className="buttons">
-                  {/* <div className="buttons">
-                    <button onClick={regenerate} className="r-button">Regenerate Response</button>
-                    <button onClick={previous} className="r-button" disabled={currentResponseIndex === 0}>Previous</button>
-                    <button onClick={next} className="r-button" disabled={currentResponseIndex === totalResponses - 1}>Next</button>
-                    <button onClick={() => setflag(!flag)} className="r-button" id="back">Back to Generate Catalog</button>
-                  </div> */}
                 </div>
-              </div>  
+                
+                )}
+                </div>
+                 ))}
+              </div>
             </div>
             <div>
               <label className='footer'>To give a feedback, please click on the <span className='whats'>what'sapp</span> button.</label>
