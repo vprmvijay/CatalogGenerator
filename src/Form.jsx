@@ -305,42 +305,43 @@ const handleProductDescriptionChange = (event) => {
                         
                     </div>
                     <div className=''>
-                        <label>Quantity*</label>
-                        <input type="text" name="quantity" id ="quantity"  required onChange={handleQuantityChange}/>
+                        <label>Quantity</label>
+                        <input type="text" name="quantity" id ="quantity" onChange={handleQuantityChange}/>
                         
                     </div>
                     <div>
                         <div className='container'>
                             <div>
-                                <label className='label-1'>Select Marketplace*</label>
+                                <label className='label'>Select Marketplace*</label>
                                 <Select onChange={handleMarketplaceChange} />
                             </div>
                             <div>
-                                <label className='label-1'>Select Gender*</label>
+                                <label className='label'>Select Gender*</label>
                                 <Select2 onChange={handleGenderChange}/>
                             </div>
                         </div>
                         <div className='container'>
                             <div>
-                                <label className='label-1-2'>Age Group*</label>
+                                <label className='label'>Select Age Group*</label>
                                 <Select3 onChange={handleAgeChange}/>
                             </div>
                             <div>
-                                <label className='label-1'>Select Tone*</label>
+                                <label className='label'>Select Tone*</label>
                                 <Select4 onChange={handleToneChange}/>
 
                             </div>
                         </div>
                     </div>
-                    <div className='container-1'>
+                    <div className='container'>
                     <div>
                         <label>Features*</label>
-                        <textarea rows="7" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required onChange={handleFeatureChange}></textarea>   
+                        <textarea className="enter" rows="7" type="text" name="Features" id="Features" placeholder="Values must be seperated by comma(,)" required onChange={handleFeatureChange}></textarea>   
                     </div>
                     <div>
                         <label>Keywords*</label>
                         <div>
                          <textarea
+                         className='enter'
                          rows="7"
                          type="text"
                          name="Keywords"
