@@ -31,17 +31,17 @@ function Form(){
     const [title, setTitle] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [bulletPoints, setBulletPoints] = useState('');
-    const [isCollapsed, setIsCollapsed] = useState(true);
+    
     const [isCollapsedArray, setIsCollapsedArray] = useState([]);
 
     const copyToClipboard = (text) => {
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          console.log('Text copied to clipboard');
-        })
-        .catch((error) => {
-          console.error('Error copying text to clipboard:', error);
-        });
+      // navigator.clipboard.writeText(text)
+      //   .then(() => {
+      //     console.log('Text copied to clipboard');
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error copying text to clipboard:', error);
+      //   });
     };
     
 
@@ -151,9 +151,11 @@ const handleProductDescriptionChange = (event) => {
         setSelectedTone(value);
       };
       const handleAgeChange = (value) => {
+       
         if (value.length === 0) {
           setSelectedAge([""]); // Add an empty string to indicate no selection
         } else {
+          console.log(value)
           setSelectedAge(value);
         }
       };
@@ -376,7 +378,7 @@ const handleProductDescriptionChange = (event) => {
                  newArray[index] = !newArray[index]; // Toggle the collapse state for the current index
                  return newArray;
                })} className="collapse-button">
-                 <button type="button" className='res-button'>Response {index}</button>
+                 <button type="button" className='res-button'>Response {index+1}</button>
                </div>
                {!isCollapsedArray[index] && (
                  <div className="content">
@@ -394,7 +396,7 @@ const handleProductDescriptionChange = (event) => {
                    <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
                  </div>
                  <div>
-               <label>Bullet Points:</label>
+               
                {getBulletPoints(index).map((bulletPoint, index) => (
                  <div key={index}>
                    {index > 0 && (
