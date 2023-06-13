@@ -245,34 +245,34 @@ const handleProductDescriptionChange = (event) => {
         }
         
         
-        const regenerate = async () => {
-          setLoading(true);
-          //setIsManuallyModified(false);
-            try {
-              const response = await fetch(`https://cataloggeneratorv1.azurewebsites.net/api/CatalogGeneratorV1?product=${catalog.product}&brand=${catalog.brand}&marketplace=${catalog.marketplace}&gender=${catalog.gender}&age=${catalog.age}&quantity=${catalog.quantity}&tone=${catalog.tone}&features=${catalog.features}&keywords=${catalog.keywords}`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(catalog),
-              });
+        // const regenerate = async () => {
+        //   setLoading(true);
+        //   //setIsManuallyModified(false);
+        //     try {
+        //       const response = await fetch(`https://cataloggeneratorv1.azurewebsites.net/api/CatalogGeneratorV1?product=${catalog.product}&brand=${catalog.brand}&marketplace=${catalog.marketplace}&gender=${catalog.gender}&age=${catalog.age}&quantity=${catalog.quantity}&tone=${catalog.tone}&features=${catalog.features}&keywords=${catalog.keywords}`, {
+        //         method: 'POST',
+        //         headers: {
+        //           'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(catalog),
+        //       });
         
-              if (!response.ok) {
-                throw new Error('Network response was not ok');
-              }
+        //       if (!response.ok) {
+        //         throw new Error('Network response was not ok');
+        //       }
               
-              const data = await response.json();
-              setResponses(prevResponses => [...prevResponses, data]);
-              setCurrentResponseIndex(totalResponses);
+        //       const data = await response.json();
+        //       setResponses(prevResponses => [...prevResponses, data]);
+        //       setCurrentResponseIndex(totalResponses);
               
               
               
-            } catch (error) {
-              console.log(error);
-            }
-            setLoading(false);
+        //     } catch (error) {
+        //       console.log(error);
+        //     }
+        //     setLoading(false);
             
-          }
+        //   }
     return(
         <div className='brahma'>
             <div className='bar'>
@@ -357,7 +357,7 @@ const handleProductDescriptionChange = (event) => {
                     </div>
                     </div>
                     <div className='but'>
-                        <button onClick={() => { setflag(!flag); handleSubmit();}} type="button" className='button-1'  >{flag ?'Generate catalog':"Regenerate catalog"}</button>
+                        <button onClick={() => { setflag(false); handleSubmit();}} type="button" className='button-1'  >{flag ?'Generate catalog':"Regenerate catalog"}</button>
                     </div>  
                 </form>
               </div>
@@ -365,8 +365,12 @@ const handleProductDescriptionChange = (event) => {
 
               
               <div className="response">
+                {flag && <label className='ph'>Generate Response For Single Listing</label>}
+              {loading && <LoadingSpinner />}
              {responses.map((response,index)=> (
+                
                <div key={index} className='rescon'>
+                 
                <div onClick={() => setIsCollapsedArray(prevArray => {
                  const newArray = [...prevArray];
                  newArray[index] = !newArray[index]; // Toggle the collapse state for the current index
@@ -379,13 +383,13 @@ const handleProductDescriptionChange = (event) => {
                                 
                  <div>
                    <label>Title:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getTitle(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getTitle(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
                    <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange}></textarea>
 
                  </div>
                  <div>
                    <label>Product Description:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getProductDescription(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fill-rule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clip-rule="evenodd"></path></svg>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getProductDescription(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
                    
                    <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
                  </div>
@@ -410,17 +414,19 @@ const handleProductDescriptionChange = (event) => {
              
              </div>
                  
-                 {loading && <LoadingSpinner />}
+             
                  </div>
                )}
              </div>
+             
              ))}
              
              
               </div>
+              
             </div>
-            <div>
-              <label className='footer'>To give a feedback, please click on the <span className='whats'>what'sapp</span> button.</label>
+            <div className='footer'>
+              <label className='foot'>To give a feedback, please click on the <span className='whats'>what'sapp</span> button.</label>
             </div>
         </div>
 )
