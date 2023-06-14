@@ -6,7 +6,7 @@ const LoadingSpinner = () => {
     <div className="loading-spinner-overlay">
       <div className="loading-spinner-container">
         <div className="loading-spinner"></div>
-        <p>Please wait. It may take a while.</p>
+        <p>Please wait. It may take a moment.</p>
       </div>
     </div>
   );

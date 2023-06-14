@@ -1,15 +1,29 @@
-import React,{ useState} from 'react';
+import React,{ useState, useRef} from 'react';
 // import keywordExtractor from 'keyword-extractor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
 import Select from './components/select.jsx';
 import Select2 from './components/select2.jsx';
 import Select3 from './components/select3.jsx';
 import Select4 from './components/select4.jsx';
+import { saveAs } from 'file-saver';
+
+
 
 
 function Form(){
+    const ref=useRef(null);
+    const ref2=useRef(null);
+    const ref3=useRef(null);
+    const ref4=useRef(null);
+    const ref5=useRef(null);
+    const ref6=useRef(null);
+    const ref7=useRef(null);
     
+
+    const bulletPointRefs = useRef([]);
     const [flag,setflag] = useState(true);
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
@@ -33,18 +47,25 @@ function Form(){
     const [bulletPoints, setBulletPoints] = useState('');
     
     const [isCollapsedArray, setIsCollapsedArray] = useState([]);
-
-    const copyToClipboard = (text) => {
-      // navigator.clipboard.writeText(text)
-      //   .then(() => {
-      //     console.log('Text copied to clipboard');
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error copying text to clipboard:', error);
-      //   });
+    const handleDownload = (index) => {
+      const response = responses[index];
+      const formattedText = response.replace(/(Title:|Product Description:|Features:|Bullet point:)/g, '\n$1');
+      const blob = new Blob([formattedText], { type: 'text/plain;charset=utf-8' });
+      saveAs(blob, `responses${index+1}.txt`);
     };
     
-
+    const copyToClipboard = (ref) => {
+      ref.current.select();
+      document.execCommand('copy');
+    };
+    function copyToClipboardArray(index) {
+      const ref = bulletPointRefs[index];
+      if (ref && ref.current) {
+        ref.current.select();
+        document.execCommand('copy');
+      }
+    }
+   
     const getTitle = (index) => {
     if (responses[index]) {
       const matches = responses[index].match(/(Title:)(.*?)(Product Description:)/s);
@@ -155,7 +176,7 @@ const handleProductDescriptionChange = (event) => {
         if (value.length === 0) {
           setSelectedAge([""]); // Add an empty string to indicate no selection
         } else {
-          console.log(value)
+          
           setSelectedAge(value);
         }
       };
@@ -380,39 +401,45 @@ const handleProductDescriptionChange = (event) => {
                  return newArray;
                })} className="collapse-button">
                  <button type="button" className='res-button'>Response {index+1}</button>
+                 <div className="download-icon" onClick={() => handleDownload(index)}>
+                      <FontAwesomeIcon icon={faDownload} />
+                  </div>
                </div>
                {!isCollapsedArray[index] && (
                  <div className="content">
                                 
                  <div>
                    <label>Title:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getTitle(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
-                   <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange}></textarea>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyToClipboard(ref)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                   <textarea ref={ref}rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
 
                  </div>
                  <div>
                    <label>Product Description:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={copyToClipboard(getProductDescription(index))} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyToClipboard(ref2)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
                    
-                   <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
+                   <textarea ref={ref2} rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
                  </div>
                  <div>
                
-               {getBulletPoints(index).map((bulletPoint, index) => (
-                 <div key={index}>
-                   {index > 0 && (
-                     <>
-                       <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}</label>
-                       <textarea
-                         id={`bulletPoint${index}`}
-                         rows={3}
-                         value={bulletPoint}
-                         onChange={event => handleBulletPointChange(event, index)}
-                       />
-                     </>
-                   )}
-                 </div>
-               ))}
+                 {getBulletPoints(index).map((bulletPoint, index) => (
+            <div key={index}>
+              {index > 0 && (
+                <>
+                  <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}</label>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                   
+                  <textarea
+                    id={`bulletPoint${index}`}
+                    
+                    rows={3}
+                    value={bulletPoint}
+                    onChange={event => handleBulletPointChange(event, index)}
+                  />
+                </>
+              )}
+            </div>
+          ))}
  
              
              </div>
