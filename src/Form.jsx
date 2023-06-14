@@ -2,12 +2,14 @@ import React,{ useState} from 'react';
 // import keywordExtractor from 'keyword-extractor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from './components/loadingSpinner';
 import './Form.css'
 import Select from './components/select.jsx';
 import Select2 from './components/select2.jsx';
 import Select3 from './components/select3.jsx';
 import Select4 from './components/select4.jsx';
+//import Bulletpoints from'./components/Bulletpoints';
 import { saveAs } from 'file-saver';
 
 
@@ -31,11 +33,11 @@ function Form(){
 
     const [keywords, setKeywords] = useState([]);
     const [responses, setResponses] = useState([]);
-    const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
-    const totalResponses = responses.length;
-    const [title, setTitle] = useState('');
-    const [productDescription, setProductDescription] = useState('');
-    const [bulletPoints, setBulletPoints] = useState('');
+    //const [currentResponseIndex, setCurrentResponseIndex] = useState(0);
+    //const totalResponses = responses.length;
+    //const [title, setTitle] = useState('');
+    //const [productDescription, setProductDescription] = useState('');
+    //const [bulletPoints, setBulletPoints] = useState('');
     
     const [isCollapsedArray, setIsCollapsedArray] = useState([]);
     const handleDownload = (index) => {
@@ -99,7 +101,7 @@ function Form(){
       const matches = responses[index].match(/(Features:)([\s\S]*)/s);
       if (matches && matches[2]) {
         const bulletPoints = matches[2].trim();
-        const bulletPointArray = bulletPoints.split("Bullet point:");
+        const bulletPointArray = bulletPoints.split("Bullet point: ");
         return bulletPointArray;
       }
     }
@@ -108,11 +110,11 @@ function Form(){
   
 
 const handleTitleChange = (event) => {
-  setTitle(event.target.value);
+
 };
 
 const handleProductDescriptionChange = (event) => {
-  setProductDescription(event.target.value);
+
 };
 
 
@@ -130,39 +132,23 @@ const handleProductDescriptionChange = (event) => {
         //   });
         //   setKeywords(extractedKeywords);
         // };
-        const updateResponseElement = (index, newValue) => {
-          setResponses(prevResponses => {
-            const newResponses = [...prevResponses]; // Create a copy of the original array
-            newResponses[index] = newValue; // Update the desired element
-            return newResponses; // Set the new array as the state value
-          });
-        };
+        // const updateResponseElement = (index, newValue) => {
+        //   setResponses(prevResponses => {
+        //     const newResponses = [...prevResponses]; // Create a copy of the original array
+        //     newResponses[index] = newValue; // Update the desired element
+        //     return newResponses; // Set the new array as the state value
+        //   });
+        // };
         
         
    
   
-    const handleAutomaticClick = (event) => {
-        event.preventDefault(); 
-        updateResponseElement(currentResponseIndex, event.target.value);
-        setIsCollapsedArray(responses.map(() => true))
-        //setIsManuallyModified(true);
-       console.log(event.target.value)
-    };
+    
   
     const handleManualChange = (event) => {       
       setKeywords(event.target.value);
     };
-    const catalog = {
-        product: product,
-        brand:brand,
-        marketplace: selectedMarketplace,
-        gender:selectedGender,
-        age:selectedAge,
-        quantity:quantity,
-        tone:selectedTone,
-        features:features,
-        keywords:keywords
-    };
+    
     
     const handleProductChange = (event) => {
         setProduct(event.target.value);
@@ -227,14 +213,14 @@ const handleProductDescriptionChange = (event) => {
       const handleBulletPointChange = (event, index) => {
         const newBulletPoints = [...getBulletPoints()];
         newBulletPoints[index] = event.target.value;
-        setBulletPoints(newBulletPoints.join(' - '));
+        //setBulletPoints(newBulletPoints.join(' - '));
       };
       
       
     const handleSubmit = async (event) => {
-        
-        
-   
+        setflag(false);
+      event.preventDefault();
+      
         const catalog = {
           product: product,
           brand:brand,
@@ -265,7 +251,7 @@ const handleProductDescriptionChange = (event) => {
             
            
             setResponses(prevResponses => [...prevResponses, data]);
-            setCurrentResponseIndex(totalResponses);
+            ///setCurrentResponseIndex(totalResponses);
             setflag(false);
       console.log(data);
 
@@ -322,7 +308,7 @@ const handleProductDescriptionChange = (event) => {
             <div className="line" /> 
             <div className='page'>
               <div className="Form">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className=''>
                         <label>Product Name*</label>
                         <input type="text" name="Product" id ="Product"  required onChange={handleProductChange}/>
@@ -389,7 +375,7 @@ const handleProductDescriptionChange = (event) => {
                     </div>
                     </div>
                     <div className='but'>
-                        <button onClick={() => { setflag(false); handleSubmit();}} type="button" className='button-1'  >{flag ?'Generate catalog':"Regenerate catalog"}</button>
+                        <button  type="submit" className='button-1'  >{flag ?'Generate catalog':"Regenerate catalog"}</button>
                     </div>  
                 </form>
               </div>
@@ -412,31 +398,48 @@ const handleProductDescriptionChange = (event) => {
                  <div className="download-icon" onClick={() => handleDownload(index)}>
                       <FontAwesomeIcon icon={faDownload} />
                   </div>
+                  <div className="down-icon">
+                  {isCollapsedArray[index] ? <FontAwesomeIcon icon={faChevronDown} rotation={270} />:<FontAwesomeIcon icon={faChevronDown} /> }
+                  </div>
                </div>
                {!isCollapsedArray[index] && (
                  <div className="content">
                                 
-                 <div>
-                   <label>Title:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyTitleClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
-                   <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
-
+                 <div className='r-title'>
+                  <div className='r-title-s'>
+                    <label>Title:</label>
+                    <div className='r-svg'>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyTitleClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                    </div>
+                  </div>
+                  <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
                  </div>
+                 <div className='r-title'>
+                  <div className='r-title-s'>
+                    <label>Product Description:</label>
+                    <div className='r-svg'>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyPDClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                    </div>
+                  </div>
+                  <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
+                  </div>
                  <div>
-                   <label>Product Description:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyPDClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                {getBulletPoints(index).map((bulletPoint, index) => (
+                    
                    
-                   <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
-                 </div>
-                 <div>
                
-                 {getBulletPoints(index).map((bulletPoint, index) => (
             <div key={index}>
               {index > 0 && (
+                
                 <>
-                  <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}</label>
+                <div className='r-title'>
+                  <div className='r-title-s'>
+                  <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}:</label>
+                  <div className='r-svg'>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyBPClipboard(bulletPoint)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
-                   
+                  </div>
+                  </div>
+
                   <textarea
                     id={`bulletPoint${index}`}
                     
@@ -444,6 +447,7 @@ const handleProductDescriptionChange = (event) => {
                     value={bulletPoint}
                     onChange={event => handleBulletPointChange(event, index)}
                   />
+                </div>
                 </>
               )}
             </div>
