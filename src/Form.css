@@ -55,12 +55,14 @@ color: #fff;
 
 }
 .footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
 }
 .foot{
   
-  margin-left: 40%;
 }
 .whats{
   color:green;
@@ -392,4 +394,54 @@ textarea {
 .r-svg{
   margin-right: 20px;
 zoom: 0.6;
+}
+@media screen and (max-width: 900px) {
+  .page {
+    flex-direction: column;
+  }
+  .Form{
+    max-width:100%;
+    padding: 5%;
+  }
+  .response{
+    width: 96%;
+    justify-content: center;
+    margin: 2%;
+    min-height: auto;
+  }
+  .ph{
+    padding-bottom: 45%;
+  }
+  .footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .foot{
+    margin-left: 0%;
+  }
+  .helpbutton{
+    top:2%;
+    right:1%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .container{
+    flex-direction: column;
+    
+  }
+  .res-button{
+    font-size: 10px;
+    padding: 0%;
+  }
+  textarea{
+    width: 90%;
+  }
+  .Head{
+    font-size: 30px;
+  }
+  .title{
+    font-size: 18px;
+  }
 }

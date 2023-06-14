@@ -77,13 +77,13 @@ function Form(){
     };
    
     const getTitle = (index) => {
-    if (responses[index]) {
-      const matches = responses[index].match(/(Title:)(.*?)(Product Description:)/s);
-    if (matches && matches[2]) {
-      return matches[2].trim();
-    }
-    }
-    return '';
+      if (responses[index]) {
+        const matches = responses[index].match(/(Title:)(.*?)(Product Description:)/s);
+      if (matches && matches[2]) {
+        return matches[2].trim();
+        }
+      }
+      return '';
     };
 
     const getProductDescription = (index) => {
@@ -94,28 +94,28 @@ function Form(){
         }
       }
     return '';
-  };
+    };
 
-  const getBulletPoints = (index) => {
-    if (responses[index]) {
-      const matches = responses[index].match(/(Features:)([\s\S]*)/s);
-      if (matches && matches[2]) {
-        const bulletPoints = matches[2].trim();
-        const bulletPointArray = bulletPoints.split("Bullet point: ");
-        return bulletPointArray;
+    const getBulletPoints = (index) => {
+      if (responses[index]) {
+        const matches = responses[index].match(/(Features:)([\s\S]*)/s);
+        if (matches && matches[2]) {
+          const bulletPoints = matches[2].trim();
+          const bulletPointArray = bulletPoints.split("Bullet point: ");
+          return bulletPointArray;
+        }
       }
-    }
-    return [];
-  };
+      return [];
+    };
   
 
-const handleTitleChange = (event) => {
+    const handleTitleChange = (event) => {
 
-};
+    };
 
-const handleProductDescriptionChange = (event) => {
+    const handleProductDescriptionChange = (event) => {
 
-};
+    };
 
 
 
@@ -253,7 +253,7 @@ const handleProductDescriptionChange = (event) => {
             setResponses(prevResponses => [...prevResponses, data]);
             ///setCurrentResponseIndex(totalResponses);
             setflag(false);
-      console.log(data);
+            console.log(data);
 
           } catch (error) {
             console.log(error);
@@ -384,74 +384,72 @@ const handleProductDescriptionChange = (event) => {
               
               <div className="response">
                 {flag && <label className='ph'>Generate Response For Single Listing</label>}
-              {loading && <LoadingSpinner />}
-             {responses.map((response,index)=> (
+                {loading && <LoadingSpinner />}
+                {responses.map((response,index)=> (
                 
-               <div key={index} className='rescon'>
+                  <div key={index} className='rescon'>
                  
-               <div onClick={() => setIsCollapsedArray(prevArray => {
-                 const newArray = [...prevArray];
-                 newArray[index] = !newArray[index]; // Toggle the collapse state for the current index
-                 return newArray;
-               })} className="collapse-button">
-                 <button type="button" className='res-button'>Response {index+1}</button>
-                 <div className="download-icon" onClick={() => handleDownload(index)}>
+                  <div onClick={() => setIsCollapsedArray(prevArray => {
+                  const newArray = [...prevArray];
+                  newArray[index] = !newArray[index]; // Toggle the collapse state for the current index
+                  return newArray;
+                  })} className="collapse-button">
+                    <button type="button" className='res-button'>Response {index+1}</button>
+                    <div className="download-icon" onClick={() => handleDownload(index)}>
                       <FontAwesomeIcon icon={faDownload} />
-                  </div>
-                  <div className="down-icon">
-                  {isCollapsedArray[index] ? <FontAwesomeIcon icon={faChevronDown} rotation={270} />:<FontAwesomeIcon icon={faChevronDown} /> }
-                  </div>
-               </div>
-               {!isCollapsedArray[index] && (
-                 <div className="content">
-                                
-                 <div className='r-title'>
-                  <div className='r-title-s'>
-                    <label>Title:</label>
-                    <div className='r-svg'>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyTitleClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                    </div>
+                    <div className="down-icon">
+                      {isCollapsedArray[index] ? <FontAwesomeIcon icon={faChevronDown} rotation={270} />:<FontAwesomeIcon icon={faChevronDown} /> }
                     </div>
                   </div>
-                  <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
-                 </div>
-                 <div className='r-title'>
-                  <div className='r-title-s'>
-                    <label>Product Description:</label>
-                    <div className='r-svg'>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyPDClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                  {!isCollapsedArray[index] && (
+                    <div className="content">
+                                   
+                    <div className='r-title'>
+                     <div className='r-title-s'>
+                       <label>Title:</label>
+                       <div className='r-svg'>
+                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyTitleClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                       </div>
+                     </div>
+                     <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
                     </div>
-                  </div>
-                  <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
-                  </div>
-                 <div>
-                {getBulletPoints(index).map((bulletPoint, index) => (
+                    <div className='r-title'>
+                     <div className='r-title-s'>
+                       <label>Product Description:</label>
+                       <div className='r-svg'>
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyPDClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                       </div>
+                     </div>
+                     <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
+                     </div>
+                    <div>
+                  {getBulletPoints(index).map((bulletPoint, index) => (
                     
                    
+                    <div key={index}>
                
-            <div key={index}>
-              {index > 0 && (
-                
-                <>
-                <div className='r-title'>
-                  <div className='r-title-s'>
-                  <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}:</label>
-                  <div className='r-svg'>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyBPClipboard(bulletPoint)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
-                  </div>
-                  </div>
-
-                  <textarea
-                    id={`bulletPoint${index}`}
-                    
-                    rows={3}
-                    value={bulletPoint}
-                    onChange={event => handleBulletPointChange(event, index)}
-                  />
-                </div>
-                </>
-              )}
-            </div>
-          ))}
+                      {index > 0 && (
+                        
+                        <>
+                        <div className='r-title'>
+                          <div className='r-title-s'>
+                          <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}:</label>
+                          <div className='r-svg'>
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyBPClipboard(bulletPoint)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                          </div>
+                          </div>
+                          <textarea
+                          id={`bulletPoint${index}`}
+                          rows={3}
+                          value={bulletPoint}
+                          onChange={event => handleBulletPointChange(event, index)}
+                          />
+                        </div>
+                        </>
+                      )}
+                    </div>
+                  ))}
  
              
              </div>
