@@ -1,4 +1,4 @@
-import React,{ useState, useRef} from 'react';
+import React,{ useState} from 'react';
 // import keywordExtractor from 'keyword-extractor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -14,16 +14,7 @@ import { saveAs } from 'file-saver';
 
 
 function Form(){
-    const ref=useRef(null);
-    const ref2=useRef(null);
-    const ref3=useRef(null);
-    const ref4=useRef(null);
-    const ref5=useRef(null);
-    const ref6=useRef(null);
-    const ref7=useRef(null);
     
-
-    const bulletPointRefs = useRef([]);
     const [flag,setflag] = useState(true);
     
     const [selectedMarketplace, setSelectedMarketplace] = useState('Amazon');
@@ -54,17 +45,34 @@ function Form(){
       saveAs(blob, `responses${index+1}.txt`);
     };
     
-    const copyToClipboard = (ref) => {
-      ref.current.select();
+    
+    const copyTitleClipboard = (index) =>{
+      const temp=getTitle(index);
+      const tempInput = document.createElement('textarea');
+      tempInput.value = temp;
+      document.body.appendChild(tempInput);
+      tempInput.select();
       document.execCommand('copy');
+      document.body.removeChild(tempInput);
     };
-    function copyToClipboardArray(index) {
-      const ref = bulletPointRefs[index];
-      if (ref && ref.current) {
-        ref.current.select();
-        document.execCommand('copy');
-      }
-    }
+    const copyPDClipboard = (index) =>{
+      const temp=getProductDescription(index);
+      const tempInput = document.createElement('textarea');
+      tempInput.value = temp;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+    };
+    const copyBPClipboard = (value) =>{
+      const temp=value
+      const tempInput = document.createElement('textarea');
+      tempInput.value = temp;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+    };
    
     const getTitle = (index) => {
     if (responses[index]) {
@@ -410,15 +418,15 @@ const handleProductDescriptionChange = (event) => {
                                 
                  <div>
                    <label>Title:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyToClipboard(ref)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
-                   <textarea ref={ref}rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  onClick={()=>copyTitleClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                   <textarea rows="4" value={getTitle(index)} onChange={handleTitleChange} ></textarea>
 
                  </div>
                  <div>
                    <label>Product Description:</label>
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyToClipboard(ref2)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyPDClipboard(index)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
                    
-                   <textarea ref={ref2} rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
+                   <textarea rows="10" value={getProductDescription(index)} onChange={handleProductDescriptionChange}></textarea>
                  </div>
                  <div>
                
@@ -427,7 +435,7 @@ const handleProductDescriptionChange = (event) => {
               {index > 0 && (
                 <>
                   <label htmlFor={`bulletPoint${index}`}>Bullet Point {index}</label>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em"  fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" onClick={()=>copyBPClipboard(bulletPoint)} fill="currentColor" className="h-4 w-4 fill-gray-6 hover:fill-gray-7 dark:fill-dark-gray-6 dark:hover:fill-dark-gray-7 hidden group-hover:block"><path fillRule="evenodd" d="M11.3 8.3H19a3 3 0 013 3V19a3 3 0 01-3 3h-7.7a3 3 0 01-3-3v-7.7a3 3 0 013-3zm0 2a1 1 0 00-1 1V19a1 1 0 001 1H19a1 1 0 001-1v-7.7a1 1 0 00-1-1h-7.7zm-5.6 3.4a1 1 0 110 2h-.9A2.8 2.8 0 012 12.9V4.8A2.8 2.8 0 014.8 2h8.1a2.8 2.8 0 012.8 2.8v.9a1 1 0 11-2 0v-.9a.8.8 0 00-.8-.8H4.8a.8.8 0 00-.8.8v8.1a.8.8 0 00.8.8h.9z" clipRule="evenodd"></path></svg>
                    
                   <textarea
                     id={`bulletPoint${index}`}
