@@ -383,6 +383,7 @@ function Form(){
 
               
               <div className="response">
+                <div></div>
                 {flag && <label className='ph'>Generate Response For Single Listing</label>}
                 {loading && <LoadingSpinner />}
                 {responses.map((response,index)=> (
@@ -462,7 +463,7 @@ function Form(){
              ))}
              
              
-              </div>
+            </div>
               
             </div>
             <div className='footer'>

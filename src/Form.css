@@ -407,7 +407,7 @@ zoom: 0.6;
     width: 96%;
     justify-content: center;
     margin: 2%;
-    min-height: auto;
+    min-height: 100px;
   }
   .ph{
     padding-bottom: 45%;
@@ -424,6 +424,11 @@ zoom: 0.6;
   .helpbutton{
     top:2%;
     right:1%;
+  }
+  .loading-spinner{
+    width:30px;
+    height: 30px;
+    font-size: xx-small;
   }
 }
 @media screen and (max-width: 500px) {

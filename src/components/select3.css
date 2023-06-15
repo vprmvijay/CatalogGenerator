@@ -6,20 +6,20 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
-  .options{
+  /* .options{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     appearance: none;
     padding: 8px 12px;
-    font-size: 16px;
+    
     border: 1px solid grey;
     border-radius: 4px;
     background-color: white;
     color:#333;
     cursor: pointer;
-    width: 88%;
+    
     
     margin-top: 4px;
-  }
+  } */
   .s-button{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     appearance: none;
